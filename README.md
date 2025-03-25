@@ -1,84 +1,33 @@
-# Turborepo starter
 
-This Turborepo starter is maintained by the Turborepo core team.
+# Variant Frontend Test Task
 
-## Using this example
+## Технологический стек
 
-Run the following command:
+### Frontend: React + TypeScript + Vite
+Выбрал Vite, потому что он удобен, быстр, современен и, как запомнил из разговора, используется в проектах Variant.
 
-```sh
-npx create-turbo@latest
-```
+Выбрал React+TS как требуемый стек по заданию, в виде SPA, а не SSR, так как там один сервис по сути. SEO оптимизации
+можно впилить в html-темплейт, в случае очень необходимого сочетания статичного Semantic HTML с динамичными React-компонентами
+можно сделать workaround с React.Portal-ами.
 
-## What's inside?
+### Backend-like: Spin
+Требование - хранение данных на фронте + мы обсуждали на собесе идеи по хранению sensitive-данных в браузере.
+Spin - продукт от разработчиков [сервиса fermyon](https://fermyon.com/), который позволяет преобразовывать код на различных
+языках (включая TS) в WebAssembly (используется в их serverless-функциях), который работает в браузере.
+По сути, это бекенд-подобный код, который работает на фронте. Но, главное, он скомпилирован. Собираюсь использовать его для
+хранения API-key и вызывать WASM функции, при инициализации которых будет проверяться объект window (window.location.hostname).
 
-This Turborepo includes the following packages/apps:
+Эта базовая защита от вызова кода на других доменах. Можно обойти локально, подредактировав localhost, но это уже оверхед для
+халявщиков. В любом случае, чтобы забрать сам ключ, нужно декомпилировать WASM и реверс-инженирить, а если человек готов так
+поработать, то взломать можно всё, что угодно.
 
-### Apps and Packages
+### Репозиторий и runtime
+Монорепо на turbopack (также используется в проектах Variant), так как нужно хочу разделить фронт и бекенд-подобный код,
+плюс, возможно в будущем захочется добавить, например, отдельных микрофронтендов / переиспользовать компоненты как
+отдельный ui-kit какой-нибудь.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+Также бонусом turbopack является наиболее распространённые пресеты TypeScript + ESLint + Prettier, которые я собираюсь использовать.
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm build
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-pnpm dev
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+Запускаться проект будет в Bun, потому что он быстр в установке зависимостей, разработке и удобен для монорепозиториев.
+Ещё он имеет множество инструментов "из коробки", например, я собираюсь использовать как минимум поддержку WASM и встроенную
+среду для unit-тестирования.
