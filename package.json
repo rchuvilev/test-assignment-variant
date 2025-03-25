@@ -1,5 +1,5 @@
 {
-  "name": "my-turborepo",
+  "name": "test-assignment-variant",
   "private": true,
   "scripts": {
     "build": "turbo run build",
