@@ -28,6 +28,56 @@ Spin - продукт от разработчиков [сервиса fermyon](h
 
 Также бонусом turbopack является наиболее распространённые пресеты TypeScript + ESLint + Prettier, которые я собираюсь использовать.
 
+Компенсация оверхеда монорепозитория - дальнейшие масштабируемость и удобство разработки.
+
 Запускаться проект будет в Bun, потому что он быстр в установке зависимостей, разработке и удобен для монорепозиториев.
 Ещё он имеет множество инструментов "из коробки", например, я собираюсь использовать как минимум поддержку WASM и встроенную
 среду для unit-тестирования.
+
+## Анализ
+
+### Груминг и декомпозиция
+
+#### Frontend
+1. **2 Скрина:**
+* Дашборд
+* Форма
+2. **4 Блока:** ![analysis.blocks.png](.readme/analysis.blocks.png)
+* Хедер
+* Письмо
+* Форма
+* CTA-Блок
+3. **Дерево компонентов**: <br>
+* -- Header - думаю, должен быть частью статичного html, 2 ссылки и <br>
+---- Logo <br>
+---- ApplicationsCounter (ПОРТАЛ) <br>
+---- HomeButton <br>
+* -- TitleRow <br>
+---- Title, h1 "Applications" <br>
+---- *CtaButton*, button "Create new" (ПОРТАЛ) <br>
+* -- ApplicationPreview: <br>
+---- ActionButton: (icon, icon pos, text) "Copy to clipboard", "Delete" <br>
+* Reused components: <br>
+-- CtaButton ("Create new", Form Submit) <br>
+-- ApplicationsCounter (Header, CtaBlock) <br>
+-- Typography/TextSubtitle, h2 (Job title in form, "Hit your goal" in CTA block) <br>
+-- Typography/TextL, p 18/28 (AppCard text, Form) <br>
+-- Typography/TextM, p 18/28 (CtaBlock text, ApplicationsCounter, CtaButton) <br>
+-- Typography/TextS, p 16/24 (Form inputs, ApplicationPreviewButton) <br>
+-- Typography/TextXS, p 14/20 (Form labels, ) <br>
+-- Icons 20x20 (copy, delete, refresh form, etc.) <br>
+
+#### Logic, State
+- State: Applications count (on top), Active page (dashboard / form), isFull (5/5 applications)
+- Storage: Applications (LocalStorage, caching)
+- API-provider for actions: (backend-like, spin)
+
+#### Опциональные улучшения
+- Simulate slow API response (form states: borders, button state) - UI/UX
+- Application loading animation (+ in ApplicationsList) - UI/UX
+- Fingerprints, device detection + analytics (for tracking), GA, Hotjar - Analytics
+- Tests coverage (unit, integration, e2e) - Testing
+
+## Структура проекта (на базе анализа)
+
+## Обзор "требования - инструменты"
