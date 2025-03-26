@@ -1,4 +1,5 @@
-import {CONST_LS_PREFIX} from "./consts.ts";
+import {CONST_LS_KEY_DATASET, CONST_LS_PREFIX, IS_DEV} from "./consts.ts";
+import {TAppState} from "../models/InitialState.ts";
 
 class LocalStorage {
     name: string = 'LocalStorageService';
@@ -21,18 +22,6 @@ class LocalStorage {
         this.storage.setItem(this.getPropName(prop), value);
     }
 
-    remove(prop: string): void {
-        this.storage.removeItem(this.getPropName(prop));
-    }
-
-    update(prop: string, value: string): void {
-        this.set(this.getPropName(prop), value);
-    }
-
-    clear(): void {
-        this.storage.clear();
-    }
-
     getJSON(prop: string): any {
         const propName = this.getPropName(prop);
         const propValue = this.get(propName);
@@ -53,6 +42,18 @@ class LocalStorage {
         } catch (e) {
             console.error(`@${this.name}: Error saving JSON for localStorage: ${e}`, {[propName]: value});
         }
+    }
+
+    saveAppData(value: any): void {
+        console.log(`@${this.name}: Saved appState.dataset into localStorage!`);
+        this.setJSON(CONST_LS_KEY_DATASET, value);
+    }
+
+    getAppData(): TAppState {
+        const loadedData = this.getJSON(CONST_LS_KEY_DATASET);
+        console.log(`@${this.name}: ${loadedData ? 'Loaded' : 'Failed to load'} appState.dataset into localStorage!`);
+        IS_DEV && console.log({loadedData});
+        return loadedData;
     }
 }
 

@@ -1,4 +1,5 @@
 export const CONST_APP_NAME: string = 'Alt Shift App';
+export const IS_DEV: boolean = window.location.hostname === 'localhost';
 export const CONST_APPLICATIONS_NUMBER_MAX: number = 5;
 
 export const CONST_LS_PREFIX: string = 'alt_shift_app';

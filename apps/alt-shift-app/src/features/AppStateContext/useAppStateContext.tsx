@@ -1,5 +1,7 @@
 import {createContext, ReactNode, useEffect, useState} from "react";
 import {initialState} from "../../App.tsx";
+import {localStorageService} from "../../misc/LocalStorageService.ts";
+import {CONST_LS_KEY_DATASET} from "../../misc/consts.ts";
 
 export interface TAppState {};
 
@@ -26,7 +28,11 @@ const useAppState = (appStateInitial: TAppState) => {
     const stateUpdateHandler = (e: Event) => {
         STATE_UPDATE_QUEUE = {...STATE_UPDATE_QUEUE, ...(e as CustomEvent).detail};
         if (STATE_UPDATE_DEBOUNCE_TO) clearTimeout(STATE_UPDATE_DEBOUNCE_TO);
-        STATE_UPDATE_DEBOUNCE_TO = setTimeout(() => setAppState({...appState, ...STATE_UPDATE_QUEUE}), STATE_UPDATE_DEBOUNCE_MS);
+        STATE_UPDATE_DEBOUNCE_TO = setTimeout(() => {
+            const updatedState = {...appState, ...STATE_UPDATE_QUEUE};
+            localStorageService.saveAppData(updatedState);
+            setAppState(updatedState);
+        }, STATE_UPDATE_DEBOUNCE_MS);
     }
     useEffect(() => {
         stateUpdate(appState); // initial state update
