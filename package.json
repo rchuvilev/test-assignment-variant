@@ -20,5 +20,10 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@radix-ui/react-form": "^0.1.2",
+    "@radix-ui/react-portal": "^1.1.4",
+    "clsx": "^2.1.1"
+  }
 }
