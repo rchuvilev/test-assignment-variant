@@ -18,7 +18,7 @@ const PageByTabsView = ({children}: TPageViewProps) => {
     const {appState, setAppState} = useContext(AppStateContext);
     const triggerTabChange = (ev: CustomEvent) => {
         const pageView = ev?.detail as EPageViews;
-        pageView && setAppState({...appState, pageView});
+        pageView && setAppState({pageView});
     };
     useEffect(() => {
         window.addEventListener(EVENT_TAB_SET_NAME as any, triggerTabChange);

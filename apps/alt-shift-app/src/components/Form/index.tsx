@@ -1,16 +1,9 @@
-import {Tabs, Form as RadixForm} from "radix-ui";
-import style from './index.module.css';
-import {EPageViews} from "../../models/InitialState.ts";
+import {Form as RadixForm} from "radix-ui";
 
 type TPageViewProps = {
-    children?: React.ReactNode;
 }
 
-const Form = ({children}: TPageViewProps) => {
-    const TabsTrigger = ({tabValue, text}: {
-        tabValue: EPageViews;
-        text: string;
-    }) => <Tabs.Trigger value={tabValue}>{text}</Tabs.Trigger>
+const Form = ({}: TPageViewProps) => {
     return (
         <RadixForm.Root className="FormRoot">
             <RadixForm.Field className="FormField" name="email">

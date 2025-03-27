@@ -1,18 +1,17 @@
 import {createContext, ReactNode, useEffect, useState} from "react";
 import {initialState} from "../../App.tsx";
 import {localStorageService} from "../../misc/LocalStorageService.ts";
-import {CONST_LS_KEY_DATASET} from "../../misc/consts.ts";
-
-export interface TAppState {};
+import {TAppState} from "../../models/InitialState.ts";
+import {IS_DEV} from "../../misc/consts.ts";
 
 type TAppContext = {
     appState: TAppState;
-    setAppState: (state: TAppState) => void;
+    setAppState: (state: Partial<TAppState>) => void;
 };
 
-const AppStateContext: React.Context<any> = createContext({
-    appState: {} as TAppContext,
-    setAppState: (state: TAppState) => { `${state}` },
+const AppStateContext: React.Context<TAppContext> = createContext({
+    appState: {} as TAppState,
+    setAppState: (state) => IS_DEV && console.log(`Updating state: ${state}`),
 });
 
 let STATE_UPDATE_DEBOUNCE_TO: any = null;
@@ -27,6 +26,7 @@ const useAppState = (appStateInitial: TAppState) => {
     );
     const stateUpdateHandler = (e: Event) => {
         STATE_UPDATE_QUEUE = {...STATE_UPDATE_QUEUE, ...(e as CustomEvent).detail};
+        if (STATE_UPDATE_QUEUE === appState) return;
         if (STATE_UPDATE_DEBOUNCE_TO) clearTimeout(STATE_UPDATE_DEBOUNCE_TO);
         STATE_UPDATE_DEBOUNCE_TO = setTimeout(() => {
             const updatedState = {...appState, ...STATE_UPDATE_QUEUE};

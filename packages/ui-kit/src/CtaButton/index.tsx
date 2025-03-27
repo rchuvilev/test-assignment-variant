@@ -1,4 +1,4 @@
-import style from './index.css';
+import style from './index.module.css';
 
 type CtaButtonProps = {
     children: React.ReactNode;

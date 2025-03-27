@@ -5,7 +5,6 @@ import {FormTab} from "./components/PageViewForm";
 import {HomeTab} from "./components/PageViewHome";
 import {HeaderPortal} from "./components/HeaderPortal";
 import {AppStateContextProvider} from "./features/AppStateContext/useAppStateContext.tsx";
-import {localStorageService} from "./misc/LocalStorageService.ts";
 
 export const initialState: TAppState = {
     pageView: EPageViews.HOME,
@@ -14,15 +13,13 @@ export const initialState: TAppState = {
 
 function App() {
     return (
-        <>
+        <AppStateContextProvider>
             <HeaderPortal/>
-            <AppStateContextProvider>
-                <PageByTabsView>
-                    <HomeTab/>
-                    <FormTab/>
-                </PageByTabsView>
-            </AppStateContextProvider>
-        </>
+            <PageByTabsView>
+                <HomeTab/>
+                <FormTab/>
+            </PageByTabsView>
+        </AppStateContextProvider>
     )
 }
 
