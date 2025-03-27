@@ -1,0 +1,70 @@
+@font-face {
+    font-family: 'Fixel Text Light';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://github.com/MacPaw/Fixel/blob/main/fonts/ttf/FixelText-Light.ttf') format('truetype');
+}
+
+:root {
+    --font-family: 'Fixel Text', sans-serif;
+    --font-color-gray: #667085;
+}
+
+:root * {
+    font-family: var(--font-family);
+}
+
+.font-typo {
+    --font-size: var(--font-size);
+    --height: var(--font-size);
+    --padding-v: calc((var(--height) - var(--font-size)) / 2);
+    --letter-spacing: 0;
+    --font-weight: 400;
+
+    display: inline-block;
+    line-height: 1; /* "Paragraph spacing" in Figma */
+    height: var(--height, auto); /* "Line height" in figma */
+    padding: var(--padding-v, 0) 0;
+    vertical-align: middle;
+    text-align: left;
+    letter-spacing: var(--letter-spacing, 0);
+    font-weight: var(--font-weight, 400);
+
+    &.font-xxl, &.font-h1 { /* Applications,  */
+        --font-size: 48px;
+        --height: 60px;
+        --letter-spacing: -2%;
+        --font-weight: 600;
+    }
+
+    &.font-xl, &.font-h2 { /* Job title, "Hit Your goal!" */
+        --font-size: 36px;
+        --height: 44px;
+        --letter-spacing: -2%;
+        --font-weight: 600;
+    }
+
+    &.font-l, &.font-h3 {
+
+    }
+
+    &.font-m {
+        --font-size: 18px;
+        --height: 28px;
+        --letter-spacing: 0;
+    }
+
+    &.font-s {
+        --font-size: 16px;
+        --height: 24px;
+        --letter-spacing: 0;
+        --font-weight: 400;
+    }
+
+    &.font-xs {
+        --font-size: 14px;
+        --height: 20px;
+        --letter-spacing: 0;
+        --font-weight: 400;
+    }
+}
