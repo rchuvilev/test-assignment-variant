@@ -3,23 +3,27 @@ import style from './index.module.css';
 import clsx from "clsx";
 import {Form} from "../../Blocks/Form";
 import {CtaBlock} from "../../Blocks/CtaBlock";
-import {TData, TSetData} from "../../../features/ApplicationsData/applicationsData.model.ts";
-import {EPageViews} from "../../../features/PageView/usePageView.tsx";
+import {Card} from "../../Atoms/Card";
+import {useContext} from "react";
+import {AppContext} from "../../../App.tsx";
+import {EPageViews} from "../../../features/PageView/pageView.model.ts";
 
-type TProps = {
-    data: TData;
-    setData: TSetData;
-    isAppLast: boolean;
-    className?: string;
-}
+type TProps = {}
 
-const Component = ({data, setData, isAppLast, className}: TProps) => {
+const Component = ({}: TProps) => {
+    const {dataHelper} = useContext(AppContext);
+    const currData = dataHelper.currentData;
+    if (!currData) return null;
+    const fields = currData?.fields;
+    const cardText = currData?.result;
+    const isLast = dataHelper.isLastItem;
     return (
-        <Tabs.Content className={clsx(className ?? '', style.Form)} value={EPageViews.FORM}>
+        <Tabs.Content className={clsx(style.Form)} value={EPageViews.FORM}>
             <div className={'html_page-row'}>
-                <Form data={data} setData={setData} />
+                <Form fieldsData={fields} />
+                <Card cardText={cardText} />
             </div>
-            {isAppLast && <CtaBlock />}
+            {!isLast && <CtaBlock />}
         </Tabs.Content>
     );
 }

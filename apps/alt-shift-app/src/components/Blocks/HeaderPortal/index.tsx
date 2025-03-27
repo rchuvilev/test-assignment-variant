@@ -6,7 +6,8 @@ import {CONST_APPLICATIONS_NUMBER_MAX} from "../../../misc/consts.ts";
 import clsx from "clsx";
 import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
 import {AppContext} from "../../../App.tsx";
-import {EPageViews, triggerPageViewChange} from "../../../features/PageView/usePageView.tsx";
+import {triggerPageViewChange} from "../../../features/PageView/usePageView.tsx";
+import {EPageViews} from "../../../features/PageView/pageView.model.ts";
 
 type TProps = {}
 
@@ -42,9 +43,9 @@ const HeaderPortal = ({}: TProps) => {
 }
 
 function Counter() {
-    const context = useContext(AppContext);
+    const {data} = useContext(AppContext);
     const maxApplications = CONST_APPLICATIONS_NUMBER_MAX;
-    const currApplications = context?.index ?? 0;
+    const currApplications = data?.length;
     const isEmpty = currApplications === 0;
     const isFull = currApplications === maxApplications;
     return (

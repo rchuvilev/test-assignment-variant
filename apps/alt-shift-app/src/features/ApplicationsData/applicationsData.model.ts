@@ -1,18 +1,23 @@
-export enum EDatasetStatuses {
-    STARTED = 'STARTED', // new application, not all fields filled
-    FILLED = 'FILLED', // all fields filled, checks passed
-    PROCESSED = 'PROCESSED', // got and filled result
-}
+import {Dispatch, SetStateAction} from "react";
 
 export type TData = {
     fields: {
-        jobTitle: string;
-        company: string;
-        goodAt: string;
-        details: string;
+        Job_title: string;
+        Company: string;
+        I_am_good_at: string;
+        Additional_details: string;
     },
     result: string;
-    status: EDatasetStatuses;
 };
 
-export type TSetData = (data: TData) => void;
+export type TSetData = Dispatch<SetStateAction<TData[]>>
+
+export const emptyData: TData = {
+    fields: {
+        Job_title: '',
+        Company: '',
+        I_am_good_at: '',
+        Additional_details: '',
+    },
+    result: '',
+};

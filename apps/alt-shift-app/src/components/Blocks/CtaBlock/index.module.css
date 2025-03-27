@@ -5,6 +5,7 @@
 
     display: block;
     background-color: var(--block-background);
+    margin-top: 24px;
 }
 
 .Content {

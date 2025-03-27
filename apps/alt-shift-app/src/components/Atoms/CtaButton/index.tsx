@@ -2,8 +2,9 @@ import {Button} from "ui-kit";
 import styles from './index.module.css';
 import {TypographyText} from "../TypographyText";
 import clsx from "clsx";
-import {EPageViews, triggerPageViewChange} from "../../../features/PageView/usePageView.tsx";
+import {triggerPageViewChange} from "../../../features/PageView/usePageView.tsx";
 import {CONST_TEXT_CTA_BUTTON_TEXT} from "../../../misc/consts.ts";
+import {EPageViews} from "../../../features/PageView/pageView.model.ts";
 
 type TProps = {
     mode?: 'small' | 'medium';

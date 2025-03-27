@@ -1,10 +1,7 @@
 import {useEffect, useState} from "react";
 import {CONST_CUSTOM_EVENT_NAME_CHANGE_VIEW} from "../../misc/consts.ts";
+import {EPageViews} from "./pageView.model.ts";
 
-export enum EPageViews {
-    HOME = 'Home',
-    FORM = 'Create New',
-}
 
 type SetView = (view: EPageViews) => void;
 

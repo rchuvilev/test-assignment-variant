@@ -1,65 +1,106 @@
 import {Form as RadixForm} from "radix-ui";
 import clsx from "clsx";
-
 import style from './index.module.css';
-import {TData, TSetData} from "../../../features/ApplicationsData/applicationsData.model.ts";
+import {TData} from "../../../features/ApplicationsData/applicationsData.model.ts";
+import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
+import {CtaButton} from "../../Atoms/CtaButton";
+import {CONST_TEXT_SUBMIT_BUTTON_TEXT} from "../../../misc/consts.ts";
+import React, {FocusEventHandler, useContext} from "react";
+import {AppContext} from "../../../App.tsx";
 
 type TProps = {
-    data: TData;
-    setData: TSetData;
+    fieldsData: TData['fields'];
 }
 
-const Form = ({}: TProps) => {
+type TField = {
+    label: string;
+    value: string;
+    name: string;
+    type: string;
+    required: boolean;
+    keyName: string;
+}
+
+type TControlProps = {
+    className: string;
+    id: string;
+    type?: string;
+    required: boolean;
+    defaultValue: string;
+    onBlur: any;
+}
+
+const Form = ({fieldsData}: TProps) => {
+    const {dataHelper} = useContext(AppContext);
+    const Form = RadixForm.Root;
+    const Submit = RadixForm.Submit;
+    const handleBlur: FocusEventHandler<HTMLInputElement> = (e: any) => {
+        console.log('onBlur', e);
+        dataHelper.saveCurrentDataField(e.target.name, e.target.value);
+    }
+    const handleSubmit = (e: any) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Submit!', e);
+    };
+    const {Field, Label, Control} = RadixForm;
+    const Fields = () => Object.entries(fieldsData ?? {})
+        .map(([key, value]) => ({
+            keyName: key,
+            label: key.split('_').join(' '),
+            value,
+            name: key,
+            type: 'text',
+            required: true,
+        }) as TField)
+        .map((fieldData: TField, index: number) => {
+            const {label, value, keyName} = fieldData;
+            const name = keyName;
+            const isTextArea = keyName === 'Additional_Details';
+            const controlProps: TControlProps = {
+                className: clsx(style.Control, (isTextArea ? style.Textarea : style.Input)),
+                id: keyName,
+                required: true,
+                defaultValue: value,
+                onBlur: handleBlur,
+            }
+            const ControlComponent = (props: TControlProps) => (
+                React.createElement(isTextArea ? 'textarea' : 'input', {...props})
+            );
+            return (
+                <Field
+                    name={name}
+                    className={style.Field}
+                    key={utilComponentKey('Form', `${keyName}-${index}`)}
+                >
+                    <Label className={style.Label} htmlFor={name}>
+                        {label}
+                    </Label>
+                    <Control asChild>
+                        <ControlComponent {...controlProps} />
+                    </Control>
+                </Field>
+            );
+        });
+    const SubmitButton = () => {
+        return (
+            <Submit
+                onSubmit={handleSubmit}
+                asChild
+            >
+                <CtaButton mode={"small"}>{CONST_TEXT_SUBMIT_BUTTON_TEXT}</CtaButton>
+            </Submit>
+        );
+    }
+
     return (
-        <RadixForm.Root
-            className={clsx(
-                style.Form,
-            )}
+        <Form
+            className={clsx(style.Form)}
             noValidate
         >
-            <RadixForm.Field className="FormField" name="email">
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "baseline",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <RadixForm.Label className="FormLabel">Email</RadixForm.Label>
-                    <RadixForm.Message className="FormMessage" match="valueMissing">
-                        Please enter your email
-                    </RadixForm.Message>
-                    <RadixForm.Message className="FormMessage" match="typeMismatch">
-                        Please provide a valid email
-                    </RadixForm.Message>
-                </div>
-                <RadixForm.Control asChild>
-                    <input className="Input" type="email" required/>
-                </RadixForm.Control>
-            </RadixForm.Field>
-            <RadixForm.Field className="FormField" name="question">
-                <div
-                    style={{
-                        display: "flex",
-                        alignItems: "baseline",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <RadixForm.Label className="FormLabel">Question</RadixForm.Label>
-                    <RadixForm.Message className="FormMessage" match="valueMissing">
-                        Please enter a question
-                    </RadixForm.Message>
-                </div>
-                <RadixForm.Control asChild>
-                    <textarea className="Textarea" required/>
-                </RadixForm.Control>
-            </RadixForm.Field>
-            <RadixForm.Submit asChild>
-                <button className="Button" style={{marginTop: 10}}>
-                    Post question
-                </button>
-            </RadixForm.Submit>
-        </RadixForm.Root>
+            <Fields/>
+            <SubmitButton/>
+        </Form>
     );
 }
 
