@@ -81,6 +81,13 @@
     stroke: var(--color-black);
 }
 
+.FullIcon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    margin-left: 16px;
+}
+
 @media (max-width: 412px) {
     .CounterContainer,
     .CounterDots,

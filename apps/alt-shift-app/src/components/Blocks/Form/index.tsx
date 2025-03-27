@@ -1,11 +1,19 @@
 import {Form as RadixForm} from "radix-ui";
+import clsx from "clsx";
+
+import style from './index.module.css';
 
 type TProps = {
 }
 
 const Form = ({}: TProps) => {
     return (
-        <RadixForm.Root className="FormRoot">
+        <RadixForm.Root
+            className={clsx(
+                style.Form,
+            )}
+            noValidate
+        >
             <RadixForm.Field className="FormField" name="email">
                 <div
                     style={{
@@ -23,7 +31,7 @@ const Form = ({}: TProps) => {
                     </RadixForm.Message>
                 </div>
                 <RadixForm.Control asChild>
-                    <input className="Input" type="email" required />
+                    <input className="Input" type="email" required/>
                 </RadixForm.Control>
             </RadixForm.Field>
             <RadixForm.Field className="FormField" name="question">
@@ -40,11 +48,11 @@ const Form = ({}: TProps) => {
                     </RadixForm.Message>
                 </div>
                 <RadixForm.Control asChild>
-                    <textarea className="Textarea" required />
+                    <textarea className="Textarea" required/>
                 </RadixForm.Control>
             </RadixForm.Field>
             <RadixForm.Submit asChild>
-                <button className="Button" style={{ marginTop: 10 }}>
+                <button className="Button" style={{marginTop: 10}}>
                     Post question
                 </button>
             </RadixForm.Submit>

@@ -5,15 +5,15 @@ import clsx from "clsx";
 import {CtaBlock} from "../../Blocks/CtaBlock";
 
 type TPageViewProps = {
+    isFullData: boolean;
     className?: string;
 }
 
-const HomeTab = ({className}: TPageViewProps) => {
+const HomeTab = ({isFullData, className}: TPageViewProps) => {
     return (
         <Tabs.Content className={clsx(className ?? '', style.Home)} value={EPageViews.HOME}>
             <h2>Home tab</h2>
-
-            <CtaBlock />
+            {!isFullData && <CtaBlock />}
         </Tabs.Content>
     );
 }

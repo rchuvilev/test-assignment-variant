@@ -47,15 +47,19 @@ function Counter() {
     const {appState} = useContext(AppStateContext);
     const maxApplications = CONST_APPLICATIONS_NUMBER_MAX;
     const currApplications = appState?.datasets?.length ?? 0;
+    const isEmpty = currApplications === 0;
+    const isFull = currApplications === maxApplications;
     return (
         <div
             className={clsx(
                 style.CounterContainer,
-                {[style.__empty]: currApplications === 0},
+                {[style.__empty]: isEmpty},
             )}
         >
-            <p className={clsx(style.CounterText, 'font-m')}>{currApplications}/{maxApplications} applications
-                generated</p>
+            <p className={clsx(style.CounterText, 'font-m')}>
+                {currApplications}/{maxApplications} applications generated
+            </p>
+            {isFull && <img className={style.FullIcon} src={'/icons/checkbox.svg'} alt="Full"/>}
             <div className={style.CounterDots}>
                 {new Array(maxApplications).fill(null).map((_, i) => (
                     <div

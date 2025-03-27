@@ -2,6 +2,9 @@ import {Button} from "ui-kit";
 import styles from './index.module.css';
 import {TypographyText} from "../TypographyText";
 import clsx from "clsx";
+import {useContext} from "react";
+import {AppStateContext} from "../../../features/AppStateContext/useAppStateContext.tsx";
+import {EPageViews} from "../../../models/InitialState.ts";
 
 type TProps = {
     mode?: 'small' | 'medium';
@@ -9,6 +12,11 @@ type TProps = {
 
 const Component = (props: TProps) => {
     const isSmall = props.mode === 'small';
+    const {setAppState} = useContext(AppStateContext);
+    const handleClick = () => {
+        setAppState({pageView: EPageViews.FORM});
+    };
+
     return (
         <Button
             className={clsx(
@@ -17,6 +25,7 @@ const Component = (props: TProps) => {
             )}
             mode="small"
             iconUrl={'/icons/plus.svg'}
+            onClick={handleClick}
         >
             <TypographyText
                 size={isSmall ? 16 : 18}

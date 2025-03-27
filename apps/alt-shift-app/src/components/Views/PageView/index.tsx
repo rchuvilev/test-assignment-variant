@@ -1,9 +1,6 @@
 import {Tabs} from "radix-ui";
 import style from './index.module.css';
 import {EPageViews} from "../../../models/InitialState.ts";
-import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
-import {Button} from "ui-kit";
-import {CONST_TEXT_CTA_BUTTON_TEXT, consts} from "../../../misc/consts.ts";
 import {useContext, useEffect} from "react";
 import {AppStateContext} from "../../../features/AppStateContext/useAppStateContext.tsx";
 import clsx from "clsx";
@@ -28,29 +25,9 @@ const PageByTabsView = ({children}: TPageViewProps) => {
     }, []);
     return (
         <Tabs.Root className={clsx(style.PageView)} activationMode="automatic" value={appState.pageView ?? EPageViews.HOME}>
-            <Tabs.List className="TabsList" aria-label="Manage your account">
-                {Object.values({...EPageViews}).map((name: string) => {
-                    const componentName = "PageByTabsView-Trigger";
-                    return <TabsTrigger
-                        tabValue={name as EPageViews}
-                        onClick={() => setAppState({...appState, pageView: name as EPageViews})}
-                        key={utilComponentKey(componentName, name)}
-                    />
-                })}
-            </Tabs.List>
             {children}
         </Tabs.Root>
     );
 }
 
-const TabsTrigger = ({tabValue, text, onClick}: {
-    tabValue: EPageViews;
-    text?: string;
-    onClick?: () => void;
-} & React.ComponentProps<any>) => (
-    <Tabs.Trigger value={tabValue} asChild={true} onClick={() => onClick?.()}>
-        <Button>{text ?? CONST_TEXT_CTA_BUTTON_TEXT}</Button>
-    </Tabs.Trigger>
-);
-
-export {PageByTabsView, TabsTrigger};
+export {PageByTabsView};
