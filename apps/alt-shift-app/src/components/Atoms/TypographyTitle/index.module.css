@@ -1,3 +1,4 @@
-.Title {
+.Title.Title {
+    --font-family: 'Fixel Title';
     justify-content: center; /* inline-flex */
 }

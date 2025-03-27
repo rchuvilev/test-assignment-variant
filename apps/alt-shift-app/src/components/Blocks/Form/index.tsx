@@ -2,8 +2,11 @@ import {Form as RadixForm} from "radix-ui";
 import clsx from "clsx";
 
 import style from './index.module.css';
+import {TData, TSetData} from "../../../features/ApplicationsData/applicationsData.model.ts";
 
 type TProps = {
+    data: TData;
+    setData: TSetData;
 }
 
 const Form = ({}: TProps) => {

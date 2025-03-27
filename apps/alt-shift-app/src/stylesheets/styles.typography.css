@@ -41,6 +41,7 @@
     color: var(--text-color, var(--font-color-black, black));
     display: inline-block; /* fallback */
     display: inline-flex;
+    font-family: var(--font-family);
     font-size: var(--font-size);
     line-height: var(--height); /* "Paragraph spacing" in Figma */
     height: auto;
@@ -60,10 +61,7 @@
 
     &.__bold {
         --font-family: 'Fixel Text Bold';
-    }
-
-    &[class*='font-h'] {
-        --font-family: 'Fixel Title'
+        font-weight: 600;
     }
 
     /* SIZES */

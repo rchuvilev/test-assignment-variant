@@ -1,19 +1,16 @@
 import {Portal} from "@radix-ui/react-portal";
 import {useContext, useEffect, useRef} from "react";
-import {EVENT_TAB_SET_NAME} from "../../Views/PageView";
 import {Button, Icon} from "ui-kit";
-import {EPageViews} from "../../../models/InitialState.ts";
 import style from './index.module.css';
 import {CONST_APPLICATIONS_NUMBER_MAX} from "../../../misc/consts.ts";
 import clsx from "clsx";
-import {AppStateContext} from "../../../features/AppStateContext/useAppStateContext.tsx";
 import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
+import {AppContext} from "../../../App.tsx";
+import {EPageViews, triggerPageViewChange} from "../../../features/PageView/usePageView.tsx";
 
-type TPageViewProps = {
-    children?: React.ReactNode;
-}
+type TProps = {}
 
-const HeaderPortal = ({}: TPageViewProps) => {
+const HeaderPortal = ({}: TProps) => {
     const getContainer = () => document.getElementById('header-portal') as HTMLElement ?? null;
     const ref = useRef<HTMLElement>(getContainer());
     const container = ref.current;
@@ -29,10 +26,11 @@ const HeaderPortal = ({}: TPageViewProps) => {
             !container && window.removeEventListener('load', setContainer);
         };
     }, []);
+
     const handleClick = () => {
-        console.log('Go to dashboard');
-        window.dispatchEvent(new CustomEvent(EVENT_TAB_SET_NAME, {detail: EPageViews.HOME}));
+        triggerPageViewChange(EPageViews.HOME);
     }
+
     return ref.current && (
         <Portal className={clsx(style.Portal)} container={container}>
             <Counter/>
@@ -44,9 +42,9 @@ const HeaderPortal = ({}: TPageViewProps) => {
 }
 
 function Counter() {
-    const {appState} = useContext(AppStateContext);
+    const context = useContext(AppContext);
     const maxApplications = CONST_APPLICATIONS_NUMBER_MAX;
-    const currApplications = appState?.datasets?.length ?? 0;
+    const currApplications = context?.index ?? 0;
     const isEmpty = currApplications === 0;
     const isFull = currApplications === maxApplications;
     return (

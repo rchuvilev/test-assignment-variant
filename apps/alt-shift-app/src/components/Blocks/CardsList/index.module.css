@@ -1,0 +1,11 @@
+.CardsList {
+    --gap: 16px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--gap);
+    flex-basis: calc((100% - var(--gap) / 2));
+    align-items: stretch;
+    max-height: var(--max-height, 100%);
+}

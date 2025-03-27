@@ -2,9 +2,8 @@ import {Button} from "ui-kit";
 import styles from './index.module.css';
 import {TypographyText} from "../TypographyText";
 import clsx from "clsx";
-import {useContext} from "react";
-import {AppStateContext} from "../../../features/AppStateContext/useAppStateContext.tsx";
-import {EPageViews} from "../../../models/InitialState.ts";
+import {EPageViews, triggerPageViewChange} from "../../../features/PageView/usePageView.tsx";
+import {CONST_TEXT_CTA_BUTTON_TEXT} from "../../../misc/consts.ts";
 
 type TProps = {
     mode?: 'small' | 'medium';
@@ -12,9 +11,8 @@ type TProps = {
 
 const Component = (props: TProps) => {
     const isSmall = props.mode === 'small';
-    const {setAppState} = useContext(AppStateContext);
     const handleClick = () => {
-        setAppState({pageView: EPageViews.FORM});
+        triggerPageViewChange(EPageViews.FORM);
     };
 
     return (
@@ -33,7 +31,7 @@ const Component = (props: TProps) => {
                 className={styles.CtaButton}
                 {...props}
             >
-                Create new
+                {CONST_TEXT_CTA_BUTTON_TEXT}
             </TypographyText>
         </Button>
     );

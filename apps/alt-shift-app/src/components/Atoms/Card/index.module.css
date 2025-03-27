@@ -1,0 +1,53 @@
+.Card {
+    --max-height: 100%;
+    --action-height: 40px;
+    --action-gap: 8px;
+
+    display: block;
+    padding: 24px;
+    position: relative;
+}
+
+.Content {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+    z-index: 1;
+    oveflow-y: auto;
+
+}
+
+.__cropped {
+    z-index: -1;
+    overflow-y: hidden;
+}
+
+.Footer {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.CardAction {
+    display: flex;
+    align-items: center;
+    gap: var(--action-gap);
+}
+
+.CardAction:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.CardActionIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.CardActionText {
+    display: inline-block;
+    height: var(--action-height);
+}

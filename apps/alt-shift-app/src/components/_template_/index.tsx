@@ -2,9 +2,10 @@ import clsx from "clsx";
 import styles from './index.module.css';
 
 type TProps = {
-}
+    children?: React.ReactNode;
+};
 
-const Component = ({}: TProps) => {
+const Component = ({children}: TProps) => {
     return (
         <div className={clsx(styles.Root)}>
             {children}
