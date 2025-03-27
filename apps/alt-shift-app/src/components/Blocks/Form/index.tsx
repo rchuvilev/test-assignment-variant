@@ -1,9 +1,9 @@
 import {Form as RadixForm} from "radix-ui";
 
-type TPageViewProps = {
+type TProps = {
 }
 
-const Form = ({}: TPageViewProps) => {
+const Form = ({}: TProps) => {
     return (
         <RadixForm.Root className="FormRoot">
             <RadixForm.Field className="FormField" name="email">

@@ -1,0 +1,24 @@
+.CtaBlock {
+    --block-background: var(--color-green-light);
+    --block-padding-v: 54px;
+    --content-width: 480px;
+
+    display: block;
+    background-color: var(--block-background);
+}
+
+.Content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    text-align: center;
+    flex-basis: 100%;
+    width: var(--content-width);
+    max-width: 100%;
+    margin: var(--block-padding-v) auto;
+}
+
+.ContentTop {
+
+}

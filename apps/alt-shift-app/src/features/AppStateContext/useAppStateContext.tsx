@@ -3,6 +3,7 @@ import {initialState} from "../../App.tsx";
 import {localStorageService} from "../../misc/LocalStorageService.ts";
 import {TAppState} from "../../models/InitialState.ts";
 import {IS_DEV} from "../../misc/consts.ts";
+import {a} from "vite/dist/node/moduleRunnerTransport.d-CXw_Ws6P";
 
 type TAppContext = {
     appState: TAppState;
@@ -11,7 +12,7 @@ type TAppContext = {
 
 const AppStateContext: React.Context<TAppContext> = createContext({
     appState: {} as TAppState,
-    setAppState: (state) => IS_DEV && console.log(`Updating state: ${state}`),
+    setAppState: (state: Partial<TAppState>) => IS_DEV && console.log(`Updating state: ${state}`),
 });
 
 let STATE_UPDATE_DEBOUNCE_TO: any = null;
@@ -21,7 +22,7 @@ const STATE_UPDATE_EVENT_NAME: string = `APP_STATE_UPDATE_${new Date().getTime()
 const useAppState = (appStateInitial: TAppState) => {
     let STATE_UPDATE_QUEUE: TAppState = {...appStateInitial};
     const [appState, setAppState] = useState<TAppState>(appStateInitial);
-    const stateUpdate = (state: TAppState) => window.dispatchEvent(
+    const stateUpdate = (state: Partial<TAppState>) => window.dispatchEvent(
         new CustomEvent(STATE_UPDATE_EVENT_NAME, {detail: {...state}})
     );
     const stateUpdateHandler = (e: Event) => {
@@ -41,7 +42,7 @@ const useAppState = (appStateInitial: TAppState) => {
             window.removeEventListener(STATE_UPDATE_EVENT_NAME, stateUpdateHandler);
         }
     }, []);
-    return {appState, setAppState: stateUpdate};
+    return {appState, setAppState};
 }
 
 const AppStateContextProvider = ({children}: {children?: ReactNode}) => {

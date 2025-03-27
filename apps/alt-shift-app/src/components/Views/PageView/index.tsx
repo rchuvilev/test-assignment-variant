@@ -1,11 +1,11 @@
 import {Tabs} from "radix-ui";
 import style from './index.module.css';
-import {EPageViews} from "../../models/InitialState.ts";
-import {utilComponentKey} from "../../misc/utilComponentKey.ts";
+import {EPageViews} from "../../../models/InitialState.ts";
+import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
 import {CtaButton} from "ui-kit";
-import {CONST_TEXT_CTA_BUTTON_TEXT, consts} from "../../misc/consts.ts";
+import {CONST_TEXT_CTA_BUTTON_TEXT, consts} from "../../../misc/consts.ts";
 import {useContext, useEffect} from "react";
-import {AppStateContext} from "../../features/AppStateContext/useAppStateContext.tsx";
+import {AppStateContext} from "../../../features/AppStateContext/useAppStateContext.tsx";
 import clsx from "clsx";
 
 type TPageViewProps = {

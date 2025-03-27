@@ -1,9 +1,9 @@
 import './App.css';
-import {PageByTabsView} from "./components/PageView";
+import {PageByTabsView} from "./components/Views/PageView";
 import {EPageViews, getInitialDataset, TAppState} from "./models/InitialState.ts";
-import {FormTab} from "./components/PageViewForm";
-import {HomeTab} from "./components/PageViewHome";
-import {HeaderPortal} from "./components/HeaderPortal";
+import {FormTab} from "./components/Views/PageViewForm";
+import {HomeTab} from "./components/Views/PageViewHome";
+import {HeaderPortal} from "./components/Blocks/HeaderPortal";
 import {AppStateContextProvider} from "./features/AppStateContext/useAppStateContext.tsx";
 
 export const initialState: TAppState = {

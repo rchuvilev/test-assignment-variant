@@ -1,13 +1,13 @@
 import {Portal} from "@radix-ui/react-portal";
 import {useContext, useEffect, useRef} from "react";
-import {EVENT_TAB_SET_NAME} from "../PageView";
+import {EVENT_TAB_SET_NAME} from "../../Views/PageView";
 import {CtaButton, Icon} from "ui-kit";
-import {EPageViews} from "../../models/InitialState.ts";
+import {EPageViews} from "../../../models/InitialState.ts";
 import style from './index.module.css';
-import {CONST_APPLICATIONS_NUMBER_MAX} from "../../misc/consts.ts";
+import {CONST_APPLICATIONS_NUMBER_MAX} from "../../../misc/consts.ts";
 import clsx from "clsx";
-import {AppStateContext} from "../../features/AppStateContext/useAppStateContext.tsx";
-import {utilComponentKey} from "../../misc/utilComponentKey.ts";
+import {AppStateContext} from "../../../features/AppStateContext/useAppStateContext.tsx";
+import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
 
 type TPageViewProps = {
     children?: React.ReactNode;

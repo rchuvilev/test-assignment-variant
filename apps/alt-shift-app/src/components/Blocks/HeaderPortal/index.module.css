@@ -50,6 +50,7 @@
 }
 
 .CounterText {
+    display: inline-block;
     color: var(--font-color-gray);
     margin: 0;
     text-align: center;

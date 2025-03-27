@@ -1,6 +1,6 @@
 import {Tabs} from "radix-ui";
 import style from './index.module.css';
-import {EPageViews} from "../../models/InitialState.ts";
+import {EPageViews} from "../../../models/InitialState.ts";
 import clsx from "clsx";
 
 type TPageViewProps = {
