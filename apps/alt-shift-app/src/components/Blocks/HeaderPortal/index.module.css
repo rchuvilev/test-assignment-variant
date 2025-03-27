@@ -26,6 +26,12 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+
+    &.__empty {
+        & {
+            display: none;
+        }
+    }
 }
 
 .CounterDots {

@@ -1,2 +1,2 @@
-export {CtaButton} from './src/CtaButton';
+export {Button} from './src/Button';
 export {Icon} from './src/Icon';

@@ -2,7 +2,7 @@ import {Tabs} from "radix-ui";
 import style from './index.module.css';
 import {EPageViews} from "../../../models/InitialState.ts";
 import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
-import {CtaButton} from "ui-kit";
+import {Button} from "ui-kit";
 import {CONST_TEXT_CTA_BUTTON_TEXT, consts} from "../../../misc/consts.ts";
 import {useContext, useEffect} from "react";
 import {AppStateContext} from "../../../features/AppStateContext/useAppStateContext.tsx";
@@ -49,7 +49,7 @@ const TabsTrigger = ({tabValue, text, onClick}: {
     onClick?: () => void;
 } & React.ComponentProps<any>) => (
     <Tabs.Trigger value={tabValue} asChild={true} onClick={() => onClick?.()}>
-        <CtaButton>{text ?? CONST_TEXT_CTA_BUTTON_TEXT}</CtaButton>
+        <Button>{text ?? CONST_TEXT_CTA_BUTTON_TEXT}</Button>
     </Tabs.Trigger>
 );
 

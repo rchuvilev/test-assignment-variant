@@ -1,7 +1,7 @@
 import {Portal} from "@radix-ui/react-portal";
 import {useContext, useEffect, useRef} from "react";
 import {EVENT_TAB_SET_NAME} from "../../Views/PageView";
-import {CtaButton, Icon} from "ui-kit";
+import {Button, Icon} from "ui-kit";
 import {EPageViews} from "../../../models/InitialState.ts";
 import style from './index.module.css';
 import {CONST_APPLICATIONS_NUMBER_MAX} from "../../../misc/consts.ts";
@@ -36,9 +36,9 @@ const HeaderPortal = ({}: TPageViewProps) => {
     return ref.current && (
         <Portal className={clsx(style.Portal)} container={container}>
             <Counter/>
-            <CtaButton className={style.Button} onClick={handleClick}>
-                <Icon className={style.Icon} src={'/icons/home.svg'} alt="Go to dashboard" />
-            </CtaButton>
+            <Button className={style.Button} onClick={handleClick}>
+                <Icon className={style.Icon} src={'/icons/home.svg'} alt="Go to dashboard"/>
+            </Button>
         </Portal>
     );
 }
@@ -48,8 +48,14 @@ function Counter() {
     const maxApplications = CONST_APPLICATIONS_NUMBER_MAX;
     const currApplications = appState?.datasets?.length ?? 0;
     return (
-        <div className={clsx(style.CounterContainer)}>
-            <p className={clsx(style.CounterText, 'font-m')}>{currApplications}/{maxApplications} applications generated</p>
+        <div
+            className={clsx(
+                style.CounterContainer,
+                {[style.__empty]: currApplications === 0},
+            )}
+        >
+            <p className={clsx(style.CounterText, 'font-m')}>{currApplications}/{maxApplications} applications
+                generated</p>
             <div className={style.CounterDots}>
                 {new Array(maxApplications).fill(null).map((_, i) => (
                     <div

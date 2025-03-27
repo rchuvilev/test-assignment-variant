@@ -1,0 +1,26 @@
+.Button {
+    background-color: var(--kit-button-bcg, black);
+    color: var(--uikit-button-color, white);
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    white-space: nowrap;
+    height: 60px;
+    padding: 0 28px;
+    border: 1px solid var(--kit-button-border, black);
+    border-radius: var(--kit-button-radius, 0);
+    user-select: none;
+    cursor: pointer;
+}
+
+.__icon:before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    background-image: var(--icon-url);
+    background-size: 24px 24px;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 12px;
+}

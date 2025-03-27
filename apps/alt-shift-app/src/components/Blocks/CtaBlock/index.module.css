@@ -16,9 +16,28 @@
     flex-basis: 100%;
     width: var(--content-width);
     max-width: 100%;
-    margin: var(--block-padding-v) auto;
+    padding: var(--block-padding-v) 0;
+    margin: 0 auto;
 }
 
 .ContentTop {
+    width: 100%;
+}
 
+.Title {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.Message {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.ContentCounter {
+    display: flex;
+    width: 100%;
+    padding-top: 32px;
 }

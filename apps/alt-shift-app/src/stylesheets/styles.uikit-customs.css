@@ -1,0 +1,7 @@
+/* BUTTON */
+:root {
+    --kit-button-bcg: var(--color-green);
+    --kit-button-border: var(--color-green);
+    --kit-button-radius: 6px;
+    --kit-button-color: var(--color-white);
+}

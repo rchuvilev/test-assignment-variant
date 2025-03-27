@@ -1,12 +1,28 @@
 @font-face {
-    font-family: 'Fixel Text Light';
+    font-family: 'Fixel Title';
+    font-style: normal;
+    font-weight: 600;
+    src: url('/fonts/FixelDisplay-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Fixel Text';
     font-style: normal;
     font-weight: 400;
-    src: url('https://github.com/MacPaw/Fixel/blob/main/fonts/ttf/FixelText-Light.ttf') format('truetype');
+    src: url('/fonts/FixelText-Regular.ttf') format('truetype');
+}
+
+
+@font-face {
+    font-family: 'Fixel Text Bold';
+    font-style: normal;
+    font-weight: 600;
+    src: url('/fonts/FixelText-Bold.ttf') format('truetype');
 }
 
 :root {
     --font-family: 'Fixel Text', sans-serif;
+    --font-color-black: #101828;
     --font-color-gray: #667085;
 }
 
@@ -21,50 +37,91 @@
     --letter-spacing: 0;
     --font-weight: 400;
 
-    display: inline-block;
-    line-height: 1; /* "Paragraph spacing" in Figma */
-    height: var(--height, auto); /* "Line height" in figma */
-    padding: var(--padding-v, 0) 0;
+    /* --text-color is dynamically set in the Component style prop */
+    color: var(--text-color, var(--font-color-black, black));
+    display: inline-block; /* fallback */
+    display: inline-flex;
+    font-size: var(--font-size);
+    line-height: var(--height); /* "Paragraph spacing" in Figma */
+    height: auto;
+    min-height: var(--height, auto); /* "Line height" in figma */
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0;
     vertical-align: middle;
     text-align: left;
     letter-spacing: var(--letter-spacing, 0);
     font-weight: var(--font-weight, 400);
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-    &.font-xxl, &.font-h1 { /* Applications,  */
+    /* WEIGHTS */
+
+    &.__bold {
+        --font-family: 'Fixel Text Bold';
+    }
+
+    &[class*='font-h'] {
+        --font-family: 'Fixel Title'
+    }
+
+    /* SIZES */
+
+    &.font-xxl, &.font-h1, &.font-48 { /* Applications,  */
         --font-size: 48px;
         --height: 60px;
         --letter-spacing: -2%;
-        --font-weight: 600;
     }
 
-    &.font-xl, &.font-h2 { /* Job title, "Hit Your goal!" */
+    &.font-xl, &.font-h2, &.font-36 { /* Job title, "Hit Your goal!" */
         --font-size: 36px;
         --height: 44px;
         --letter-spacing: -2%;
-        --font-weight: 600;
     }
 
     &.font-l, &.font-h3 {
 
     }
 
-    &.font-m {
+    &.font-md, &.font-18 {
         --font-size: 18px;
         --height: 28px;
         --letter-spacing: 0;
     }
 
-    &.font-s {
+    &.font-sm, &.font-16 {
         --font-size: 16px;
         --height: 24px;
         --letter-spacing: 0;
-        --font-weight: 400;
     }
 
-    &.font-xs {
+    &.font-xs, &.font-14 {
         --font-size: 14px;
         --height: 20px;
         --letter-spacing: 0;
-        --font-weight: 400;
+    }
+
+    /* LINES */
+    .__clamped {
+        --line-clamp: 4;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Number of lines to display */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* DECORATIONS */
+    .__blurred-end:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 40px;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        background: linear-gradient(to top, #F2F4F7 0%, rgba(242, 244, 247, 0) 100%);
+        z-index: 2;
     }
 }
