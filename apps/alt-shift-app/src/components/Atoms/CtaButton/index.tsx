@@ -7,13 +7,18 @@ import {CONST_TEXT_CTA_BUTTON_TEXT} from "../../../misc/consts.ts";
 import {EPageViews} from "../../../features/PageView/pageView.model.ts";
 
 type TProps = {
-    mode?: 'small' | 'medium';
+    mode?: 'small' | 'medium' | 'fullwidth';
+    handleClick?: Function;
 } & Partial<React.ComponentProps<any>>;
 
 const Component = (props: TProps) => {
-    const isSmall = props.mode === 'small';
+    const mode = props.mode ?? 'medium';
+    const isSmall = mode && mode === 'small';
+    const isFullwidth = mode === 'fullwidth';
+    const handleClickProp = props.handleClick;
     const handleClick = () => {
-        triggerPageViewChange(EPageViews.FORM);
+        handleClickProp && handleClickProp();
+        !handleClickProp && triggerPageViewChange(EPageViews.FORM);
     };
 
     return (
@@ -21,8 +26,9 @@ const Component = (props: TProps) => {
             className={clsx(
                 styles.CtaButton,
                 {[styles.__small]: isSmall},
+                {[styles.__fullwidth]: isFullwidth},
             )}
-            mode="small"
+            mode={props.mode ?? "small"}
             iconUrl={'/icons/plus.svg'}
             onClick={handleClick}
         >

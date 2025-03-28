@@ -15,3 +15,7 @@
         margin-right: 8px;
     }
 }
+
+.__fullwidth {
+    width: 100%;
+}
