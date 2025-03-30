@@ -1,3 +1,22 @@
-.Form {
+.FormView {
+    --gap: 32px;
 
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    [class*="Form"] {
+        &, & + [class*="Card"] {
+            width: calc((100% - var(--gap)) / 2);
+            box-sizing: border-box;
+
+            @media (max-width: 568px) {
+                & {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }

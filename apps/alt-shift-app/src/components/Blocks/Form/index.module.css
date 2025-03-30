@@ -4,13 +4,7 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    width: 50%;
     flex-wrap: wrap;
-    @media (max-width: 568px) {
-        & {
-            width: 100%;
-        }
-    }
 }
 
 .Field {
@@ -53,7 +47,7 @@
     border-color: var(--color-red-error-border);
 }
 
-.Control:focus-visible {
+.Control:not(.__error):focus-visible {
     border-color: var(--color-green-ok-border);
 }
 
@@ -63,11 +57,49 @@
 
 .Control.Textarea {
     padding: 12px 14px;
-    min-height: 236px;
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 267px;
+    min-height: 267px;
 }
 
 .CharCounter {
     width: 100%;
 }
 
+button:has(.SubmitButton) {
+    @media (max-width: 568px) {
+        & {
+            margin-bottom: calc(var(--gap) * 2);
+        }
+    }
+}
 
+.__submitting + [class*="Card"]:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-gray);
+    background-image: url("/images/loader.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80px 80px;
+    z-index: 10;
+    animation: anim_loading 2s ease-in-out infinite;
+}
+
+@keyframes anim_loading {
+    0% {
+        background-size: 80px 80px;
+    }
+    50% {
+        background-size: 100px 100px;
+    }
+    100% {
+        background-size: 80px 80px;
+    }
+}

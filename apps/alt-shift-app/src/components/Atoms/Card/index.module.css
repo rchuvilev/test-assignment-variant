@@ -2,10 +2,13 @@
     --max-height: 100%;
     --action-height: 40px;
     --action-gap: 8px;
+    --card-radius: 12px;
 
     display: block;
     padding: 24px;
     position: relative;
+    border-radius: var(--card-radius);
+    background-color: var(--color-gray);
 }
 
 .Content {

@@ -13,13 +13,13 @@ const Component = ({}: TProps) => {
     if (!currApplicationData) return null;
     const {result, ...formData} = currApplicationData; // separate result from form data not to rerender form on result change
     return (
-        <section className={clsx(style.Form)}>
-            <div className={'html_page-row'}>
-                <Form formData={formData} />
-                <Card cardText={result} />
-            </div>
-            {!isApplicationLast && <CtaBlock />}
-        </section>
+        <div className={'html_page-row'}>
+            <section className={clsx(style.FormView)}>
+                <Form formData={formData}/>
+                <Card cardText={result}/>
+            </section>
+            {!isApplicationLast && <CtaBlock/>}
+        </div>
     );
 }
 

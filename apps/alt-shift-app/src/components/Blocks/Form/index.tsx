@@ -5,7 +5,7 @@ import {TData} from "../../../features/ApplicationsData/applicationsData.model.t
 import {utilComponentKey} from "../../../misc/utilComponentKey.ts";
 import {CtaButton} from "../../Atoms/CtaButton";
 import {CONST_TEXT_SUBMIT_BUTTON_TEXT} from "../../../misc/consts.ts";
-import {FocusEventHandler, useContext} from "react";
+import {FocusEventHandler, useContext, useState} from "react";
 import {AppContext} from "../../../App.tsx";
 import {utilDevLogger} from "../../../misc/utilDevLogger.ts";
 import {aiRequest} from "../../../features/AiRequest/aiRequest.ts";
@@ -18,6 +18,7 @@ type TProps = {
 const Form = ({formData}: TProps) => {
     const {Submit} = RadixForm;
     const {doCurrApplicationUpdate} = useContext(AppContext);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleBlur: FocusEventHandler<HTMLInputElement> = (e: any) => {
         const updatedData = {[e.target.id]: e.target.value};
@@ -27,7 +28,24 @@ const Form = ({formData}: TProps) => {
     const handleSubmit = (e: any) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Submit!', e);
+        setIsSubmitting(true);
+        const formData = new FormData(e.target);
+        const reqData: TData = Object.fromEntries(formData.entries()) as Partial<TData> as TData;
+        aiRequest({
+            reqData,
+            onSuccess: (resData: string) => {
+                const updatdData = {...reqData, result: resData};
+                utilDevLogger('@Form.handleSubmit - Success:', updatdData);
+                doCurrApplicationUpdate(updatdData, true);
+            },
+            onError: (err: any) => {
+                utilDevLogger('@Form.handleSubmit - Error:', err, 'result is set to ""');
+                doCurrApplicationUpdate({result: ''}, true);
+            },
+            onFinally: () => {
+                setIsSubmitting(false);
+            }
+        });
     };
     const Fields = () => Object.entries(formData)
         .map(([key, value]) => {
@@ -44,7 +62,11 @@ const Form = ({formData}: TProps) => {
     const SubmitButton = () => {
         return (
             <Submit asChild>
-                <CtaButton handleClick={handleSubmit} mode={"fullwidth"}>
+                <CtaButton mode={"fullwidth"} className={clsx(
+                    style.SubmitButton,
+                    {[style.__submitting]: isSubmitting},
+                    {[style.__disabled]: isSubmitting},
+                )}>
                     {CONST_TEXT_SUBMIT_BUTTON_TEXT}
                 </CtaButton>
             </Submit>
@@ -53,8 +75,10 @@ const Form = ({formData}: TProps) => {
 
     return (
         <RadixForm.Form
-            action={aiRequest}
-            className={clsx(style.Form)}
+            onSubmit={handleSubmit}
+            className={clsx(style.Form, {
+                [style.__submitting]: isSubmitting,
+            })}
             noValidate={false}
         >
             <Fields/>

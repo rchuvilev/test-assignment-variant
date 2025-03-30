@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useRef} from "react";
 import {CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS, CONST_TEXT_FORM_TEXTAREA_MAX_CHARS} from "../../../misc/consts.ts";
 import clsx from "clsx";
 import style from "./index.module.css";
 import {TypographyText} from "../../Atoms/TypographyText";
 import {Form as RadixForm} from "radix-ui";
+import {getPlaceholder, TData} from "../../../features/ApplicationsData/applicationsData.model.ts";
 
 export type TProps = {
     label: string;
@@ -15,55 +16,78 @@ export type TProps = {
 
 type TControlProps = {
     className: string;
+    ref: any;
     id: string;
     type?: string;
     required: boolean;
+    placeholder: string;
+    tabIndex: number;
     defaultValue: string;
     onBlur: any;
-    tabIndex: number;
+    onChange: any;
+    onFocus?: any;
 }
 
 export const Component = ({label, defaultValue, keyName, handleBlur}: TProps) => {
     const {Field, Label, Control} = RadixForm;
     const name = keyName;
+    const inputRef = useRef<HTMLElement>(null);
+    const counterRef = useRef<HTMLElement>(null);
+    const errorMsgRef = useRef<HTMLElement>(null);
     const isTextArea = keyName === 'Additional_details';
-    const [value, setValue] = React.useState(defaultValue);
-    const valueLength = value?.length;
-    let isError: string;
-    switch (true) {
-        case !valueLength:
-            isError = 'This field is required';
-            break;
-        case isTextArea && valueLength > CONST_TEXT_FORM_TEXTAREA_MAX_CHARS:
-            isError = `Please be more laconic, ${CONST_TEXT_FORM_TEXTAREA_MAX_CHARS} characters maximum`;
-            break;
-        case !isTextArea && valueLength > CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS:
-            isError = `Please be more laconic, ${CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS} characters maximum`;
-            break;
-        default:
-            isError = '';
-            break;
-    }
-    ;
+    const textAreaCounterText = (length: number) => `${length} / ${CONST_TEXT_FORM_TEXTAREA_MAX_CHARS}`;
+    const red = 'var(--color-red-error-text)';
+    const gray = 'var(--color-gray-dark)';
+    const textAreaCounterColor = (length: number) => length > CONST_TEXT_FORM_TEXTAREA_MAX_CHARS ? red : gray;
     let updateValueTO: any = null;
+    const handleChange = (e: any) => {
+        updateValueTO && clearTimeout(updateValueTO);
+        updateValueTO = setTimeout(() => {
+            const valueLength = e.target.value.length;
+            let error: string = '';
+            switch (true) {
+                case !valueLength:
+                    error = '⠀'; // 'This field is required';
+                    break;
+                case isTextArea && valueLength > CONST_TEXT_FORM_TEXTAREA_MAX_CHARS:
+                    error = `Please be more laconic, ${CONST_TEXT_FORM_TEXTAREA_MAX_CHARS} characters maximum`;
+                    break;
+                case !isTextArea && valueLength > CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS:
+                    error = `Please be more laconic, ${CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS} characters maximum`;
+                    break;
+                default:
+                    break;
+            }
+            inputRef?.current && (inputRef.current.classList[error ? 'add' : 'remove'](style.__error));
+            const errorMsg = errorMsgRef?.current?.querySelector('span');
+            errorMsg && (errorMsg.innerText = error);
+            const counter = counterRef?.current?.querySelector('span');
+            counter && (counter.innerText = textAreaCounterText(valueLength));
+            counter?.style.setProperty('--text-color', error ? red : gray);
+        }, 50);
+    }
+    const placeholder = getPlaceholder(keyName as keyof TData);
     const controlProps: TControlProps = {
-        className: clsx(style.Control, (isTextArea ? style.Textarea : style.Input), {
-            [style.__error]: isError
-        }),
+        ref: inputRef,
+        className: clsx(style.Control, (isTextArea ? style.Textarea : style.Input)),
         id: keyName,
         tabIndex: 0,
         required: true,
-        defaultValue: value,
+        defaultValue,
+        placeholder,
         onBlur: (e: any) => {
-            updateValueTO && clearTimeout(updateValueTO);
-            updateValueTO = setTimeout(() => {
-                setValue(e.target.value);
-                handleBlur(e);
-            }, 200);
+            handleBlur(e);
+            handleChange(e);
         },
+        onChange: handleChange,
+        // onFocus: handleChange,
     }
     const ControlComponent = (props: TControlProps) => (
-        React.createElement(isTextArea ? 'textarea' : 'input', {...props})
+        React.createElement(isTextArea ? 'textarea' : 'input', {
+            minLength: 1,
+            maxLength: isTextArea ? CONST_TEXT_FORM_TEXTAREA_MAX_CHARS : CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS,
+            ...props,
+        })
     );
     return (
         <Field
@@ -78,17 +102,21 @@ export const Component = ({label, defaultValue, keyName, handleBlur}: TProps) =>
             <Control asChild>
                 <ControlComponent {...controlProps} />
             </Control>
+            {!isTextArea && (
+                <div ref={errorMsgRef as any} className={style.ErrorMsg}>
+                    <TypographyText size={14} color="var(--color-red-error-text)">
+                        {''}
+                    </TypographyText>
+                </div>
+            )}
             {isTextArea && (
-                <div className={style.CharCounter}>
+                <div ref={counterRef as any} className={style.CharCounter}>
                     <TypographyText
                         size={14}
                         className={style.MessageText}
-                        color={valueLength > CONST_TEXT_FORM_TEXTAREA_MAX_CHARS
-                            ? 'var(--color-red-error-text)'
-                            : 'var(--color-gray-dark)'
-                        }
+                        color={textAreaCounterColor(defaultValue.length)}
                     >
-                        {`${valueLength} / ${CONST_TEXT_FORM_TEXTAREA_MAX_CHARS}`}
+                        {textAreaCounterText(defaultValue.length)}
                     </TypographyText>
                 </div>
             )}
