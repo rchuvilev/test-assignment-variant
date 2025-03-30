@@ -1,13 +1,10 @@
 import {useEffect, useState} from "react";
 import {CONST_CUSTOM_EVENT_NAME_CHANGE_VIEW} from "../../misc/consts.ts";
-import {EPageViews} from "./pageView.model.ts";
-
-
-type SetView = (view: EPageViews) => void;
+import {EPageViews, TSetView} from "./pageView.model.ts";
 
 class PageViewChange {
     static eventName = CONST_CUSTOM_EVENT_NAME_CHANGE_VIEW;
-    static handleEventViewChange(setView: SetView) {
+    static handleEventViewChange(setView: TSetView) {
         const eventName = PageViewChange.eventName;
         const handler = (ev: CustomEvent) => {
             const view = ev?.detail as EPageViews;

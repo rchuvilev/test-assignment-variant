@@ -1,4 +1,3 @@
-import {Tabs} from "radix-ui";
 import style from './index.module.css';
 import clsx from "clsx";
 import {PageViewForm} from "../PageViewForm";
@@ -10,24 +9,20 @@ type TProps = {
 }
 
 const Component = ({view}: TProps) => {
-    const ActiveView = () => {
-        switch (view) {
-            case EPageViews.FORM:
-                return <PageViewForm/>;
-                break;
-            default:
-                return <PageViewHome/>;
-                break;
-        }
-    };
+    console.log(1111111, 'PageView rerendered');
     return (
-        <Tabs.Root
-            className={clsx(style.PageView)}
-            activationMode="automatic"
-            value={view ?? EPageViews.HOME}
-        >
-            <ActiveView/>
-        </Tabs.Root>
+        <div className={clsx(style.PageView)}>
+            {(() => {
+                switch (view) {
+                    case EPageViews.FORM:
+                        return <PageViewForm/>;
+                        break;
+                    default:
+                        return <PageViewHome/>;
+                        break;
+                }
+            })()}
+        </div>
     );
 }
 

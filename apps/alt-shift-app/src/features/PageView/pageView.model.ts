@@ -6,3 +6,5 @@ export enum EPageViews {
 export type TViewContext = {
     view: EPageViews;
 }
+
+export type TSetView = (view: EPageViews) => void;

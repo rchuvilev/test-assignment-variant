@@ -1,27 +1,74 @@
-import {useEffect, useRef, useState} from "react";
+import {useState} from "react";
 import {emptyData, TData} from "./applicationsData.model.ts";
-import {dataHelper} from "./applicationsData.helper.ts";
-import {IS_DEV} from "../../misc/consts.ts";
+import {applicationsDataHelper} from "./applicationsData.helper.ts";
 
-export type TDataContext = {
-    data: TData[];
-    dataHelper: typeof dataHelper;
-}
+export type TApplicationsContext = {
+    applicationsList: TData[],
+    currApplicationIndex: number,
+    currApplicationData: TData,
+    doCurrApplicationUpdate: (data: Partial<TData>) => void,
+    doGotoNextApplication: () => void,
+    doGotoXApplicationEdit: (index: number, isSubscriber: boolean) => void,
+    doRemoveApplication: () => void,
+    isApplicationFull: boolean,
+    isApplicationLast: boolean,
+};
 
-const useApplicationsData = (): TDataContext => {
-    const helper = useRef(dataHelper);
-    const [data, setData] = useState<TData[]>(helper.current.data ?? [emptyData]);
-    useEffect(() => {
-        dataHelper.init(setData);
-    }, []);
-    useEffect(() => {
-        IS_DEV && console.log(`@useApplicationsData - updated state:`, data);
-    }, [data]);
-    const dataContext: TDataContext = {
-        data,
-        dataHelper: helper.current,
+export type TCheckUserIsSubscriberFunc = (...args: any) => boolean;
+
+const useApplicationsData = (): TApplicationsContext => {
+    const storedDataset: TData[] | null = applicationsDataHelper.data;
+    const initialDataset: TData[] = storedDataset ?? new Array(applicationsDataHelper.maxDataLength).fill(emptyData) ;
+    const getCurrIndex = (dataset: TData[]): number => dataset.findIndex((data: TData) => !data.result) ?? 0; // find first empty application
+    const [dataset, setDataset] = useState<TData[]>(initialDataset);
+    const [currentApplicationIndex, setCurrentApplicationIndex] = useState<number>(getCurrIndex(dataset));
+
+    const isApplicationFull = !!dataset[currentApplicationIndex].result;
+    const isApplicationLast = currentApplicationIndex === applicationsDataHelper.maxDataLength - 1;
+
+    const currDataGet = () => ({...dataset[currentApplicationIndex]});
+    const currDataSet = (data: Partial<TData>) => {
+        const updatedData = {...currDataGet(), ...data};
+        const newDataset = [...dataset];
+        newDataset[currentApplicationIndex] = updatedData;
+        applicationsDataHelper.data = newDataset;
+        setDataset(newDataset);
     }
-    return dataContext;
+    const doGotoNextApplication = () => {
+        if (!isApplicationFull) return console.log('Application is not full');
+        if (isApplicationLast) return console.log('Application is last');
+        const nextIndex = currentApplicationIndex + 1;
+        const nextApplication = dataset?.[nextIndex];
+        if (!nextApplication) return console.log('Application is not found, sorry');
+        setCurrentApplicationIndex(nextIndex);
+    }
+    const doGotoXApplicationEdit = (
+        // TODO: use to motivate user to subscribe and work on existing applications without starting new ones from scratch
+        index: number,
+        isSubscriber: boolean | TCheckUserIsSubscriberFunc
+    ) => {
+        if (!isSubscriber) return alert('Please subscribe to our product!');
+        if (index < 0 || index >= applicationsDataHelper.maxDataLength) return alert(`Couldn't find this application... =(`);
+        setCurrentApplicationIndex(index);
+    }
+    const doRemoveApplication = () => {
+        const newDataset = [...dataset].slice(currentApplicationIndex, 1);
+        newDataset.push(emptyData);
+        setDataset(newDataset);
+    }
+
+    const applicationsContext: TApplicationsContext = {
+        applicationsList: dataset,
+        currApplicationIndex: currentApplicationIndex,
+        currApplicationData: currDataGet(),
+        doCurrApplicationUpdate: currDataSet,
+        doGotoNextApplication,
+        doGotoXApplicationEdit,
+        doRemoveApplication,
+        isApplicationFull,
+        isApplicationLast,
+    }
+    return applicationsContext;
 }
 
 export {useApplicationsData};

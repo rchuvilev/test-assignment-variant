@@ -43,11 +43,10 @@ const HeaderPortal = ({}: TProps) => {
 }
 
 function Counter() {
-    const {data} = useContext(AppContext);
+    const {currApplicationIndex} = useContext(AppContext);
     const maxApplications = CONST_APPLICATIONS_NUMBER_MAX;
-    const currApplications = data?.length;
-    const isEmpty = currApplications === 0;
-    const isFull = currApplications === maxApplications;
+    const isEmpty = currApplicationIndex === 0;
+    const isFull = currApplicationIndex + 1 === maxApplications;
     return (
         <div
             className={clsx(
@@ -56,7 +55,7 @@ function Counter() {
             )}
         >
             <p className={clsx(style.CounterText, 'font-m')}>
-                {currApplications}/{maxApplications} applications generated
+                {currApplicationIndex + 1}/{maxApplications} applications generated
             </p>
             {isFull && <img className={style.FullIcon} src={'/icons/checkbox.svg'} alt="Full"/>}
             <div className={style.CounterDots}>
@@ -65,7 +64,7 @@ function Counter() {
                         key={utilComponentKey('HeaderApplicationsCounter', i)}
                         className={clsx(
                             style.CounterDot,
-                            {[style.CounterDotActive]: i < currApplications},
+                            {[style.CounterDotActive]: i <= currApplicationIndex},
                         )}
                     />
                 ))}
