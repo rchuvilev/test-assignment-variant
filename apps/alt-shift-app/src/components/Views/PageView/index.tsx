@@ -9,7 +9,6 @@ type TProps = {
 }
 
 const Component = ({view}: TProps) => {
-    console.log(1111111, 'PageView rerendered');
     return (
         <div className={clsx(style.PageView)}>
             {(() => {

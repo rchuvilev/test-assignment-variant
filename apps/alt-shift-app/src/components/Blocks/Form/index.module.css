@@ -46,15 +46,28 @@
     display: inline-flex;
     border: 1px solid var(--color-gray-light);
     border-radius: 6px;
+    outline: none;
 }
 
-.Control.Input {
+.Control.__error {
+    border-color: var(--color-red-error-border);
+}
+
+.Control:focus-visible {
+    border-color: var(--color-green-ok-border);
+}
+
+.Input {
     padding: 8px 12px;
 }
 
 .Control.Textarea {
     padding: 12px 14px;
     min-height: 236px;
+}
+
+.CharCounter {
+    width: 100%;
 }
 
 

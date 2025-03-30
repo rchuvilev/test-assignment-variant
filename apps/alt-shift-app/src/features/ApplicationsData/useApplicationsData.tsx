@@ -6,7 +6,7 @@ export type TApplicationsContext = {
     applicationsList: TData[],
     currApplicationIndex: number,
     currApplicationData: TData,
-    doCurrApplicationUpdate: (data: Partial<TData>) => void,
+    doCurrApplicationUpdate: (data: Partial<TData>, doUpdateState: boolean) => void,
     doGotoNextApplication: () => void,
     doGotoXApplicationEdit: (index: number, isSubscriber: boolean) => void,
     doRemoveApplication: () => void,
@@ -27,12 +27,12 @@ const useApplicationsData = (): TApplicationsContext => {
     const isApplicationLast = currentApplicationIndex === applicationsDataHelper.maxDataLength - 1;
 
     const currDataGet = () => ({...dataset[currentApplicationIndex]});
-    const currDataSet = (data: Partial<TData>) => {
+    const currDataSet = (data: Partial<TData>, doUpdateState: boolean = true) => {
         const updatedData = {...currDataGet(), ...data};
         const newDataset = [...dataset];
         newDataset[currentApplicationIndex] = updatedData;
         applicationsDataHelper.data = newDataset;
-        setDataset(newDataset);
+        doUpdateState && setDataset(newDataset);
     }
     const doGotoNextApplication = () => {
         if (!isApplicationFull) return console.log('Application is not full');

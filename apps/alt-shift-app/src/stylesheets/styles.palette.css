@@ -6,4 +6,7 @@
     --color-gray-dark: #475467;
     --color-green: #087443;
     --color-green-light: #EDFCF2;
+    --color-red-error-text: #F04438;
+    --color-red-error-border: #FDA29B;
+    --color-green-ok-border: #73E2A3;
 }
