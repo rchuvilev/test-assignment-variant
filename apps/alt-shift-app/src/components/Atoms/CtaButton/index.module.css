@@ -18,4 +18,5 @@
 
 .__fullwidth {
     width: 100%;
+    justify-content: center;
 }
