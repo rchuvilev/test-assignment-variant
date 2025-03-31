@@ -1,10 +1,10 @@
 export enum EPageViews {
-    HOME = 'Home',
-    FORM = 'Create New',
+  HOME = "Home",
+  FORM = "Create New",
 }
 
 export type TViewContext = {
-    view: EPageViews;
-}
+  view: EPageViews;
+};
 
 export type TSetView = (view: EPageViews) => void;

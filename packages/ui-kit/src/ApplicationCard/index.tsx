@@ -1,11 +1,11 @@
-import style from './index.module.css';
+import style from "./index.module.css";
 
 type TApplicationCardProps = {
-    children: React.ReactNode;
-}
+  children: React.ReactNode;
+};
 
 const ApplicationCard = (props: TApplicationCardProps) => {
-    return <div className="modal-page">{props.children}</div>;
-}
+  return <div className="modal-page">{props.children}</div>;
+};
 
-export {ApplicationCard};
+export { ApplicationCard };

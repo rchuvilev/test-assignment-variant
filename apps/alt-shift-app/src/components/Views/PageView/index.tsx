@@ -1,28 +1,28 @@
-import style from './index.module.css';
+import style from "./index.module.css";
 import clsx from "clsx";
-import {PageViewForm} from "../PageViewForm";
-import {PageViewHome} from "../PageViewHome";
-import {EPageViews} from "../../../features/PageView/pageView.model.ts";
+import { PageViewForm } from "../PageViewForm";
+import { PageViewHome } from "../PageViewHome";
+import { EPageViews } from "../../../features/PageView/pageView.model.ts";
 
 type TProps = {
-    view: EPageViews;
-}
+  view: EPageViews;
+};
 
-const Component = ({view}: TProps) => {
-    return (
-        <div className={clsx(style.PageView)}>
-            {(() => {
-                switch (view) {
-                    case EPageViews.FORM:
-                        return <PageViewForm/>;
-                        break;
-                    default:
-                        return <PageViewHome/>;
-                        break;
-                }
-            })()}
-        </div>
-    );
-}
+const Component = ({ view }: TProps) => {
+  return (
+    <div className={clsx(style.PageView)}>
+      {(() => {
+        switch (view) {
+          case EPageViews.FORM:
+            return <PageViewForm />;
+            break;
+          default:
+            return <PageViewHome />;
+            break;
+        }
+      })()}
+    </div>
+  );
+};
 
-export {Component as PageView};
+export { Component as PageView };

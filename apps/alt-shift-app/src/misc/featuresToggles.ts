@@ -1,7 +1,5 @@
 type FeaturesToggles = {
-    [key: string]: boolean;
-}
+  [key: string]: boolean;
+};
 
-export const featuresToggles: FeaturesToggles = {
-
-}
+export const featuresToggles: FeaturesToggles = {};
