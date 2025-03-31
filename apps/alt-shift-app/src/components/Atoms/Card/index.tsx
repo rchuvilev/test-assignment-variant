@@ -14,6 +14,57 @@ type TProps = {
   passedIndex?: number;
 };
 
+const Component = ({ cardText, maxHeightPx, passedIndex }: TProps) => {
+  const isCropped = !!maxHeightPx;
+  return (
+    cardText && (
+      <div
+        className={clsx(styles.Card)}
+        style={
+          isCropped
+            ? ({ [`--max-height`]: `${maxHeightPx}px` } as CSSProperties)
+            : {}
+        }
+      >
+        <div
+          className={clsx(styles.Content, { [styles.__cropped]: isCropped })}
+        >
+          {cardText.split("\n").map((line: string, index: number) => (
+            <p
+              key={utilComponentKey(
+                `${passedIndex ?? -1}-CardContentLine`,
+                index,
+              )}
+            >
+              <TypographyText size={18} color="var(--font-color-gray)">
+                {line}
+              </TypographyText>
+            </p>
+          ))}
+        </div>
+        {isCropped && (
+          <div className={styles.Footer}>
+            {(["copy", "delete"] as TCardActionType[])
+              .reverse()
+              .map((actionType: TCardActionType, index: number) => (
+                <CardAction
+                  key={utilComponentKey(
+                    `${passedIndex ?? -1}-CardAction`,
+                    index,
+                  )}
+                  cardText={cardText}
+                  actionType={actionType}
+                />
+              ))}
+          </div>
+        )}
+      </div>
+    )
+  );
+};
+
+export { Component as Card };
+
 type TCardActionType = "copy" | "delete";
 
 type TCardActionProps = {
@@ -50,59 +101,8 @@ const CardAction = ({ actionType, cardText }: TCardActionProps) => {
         size={16}
         color="var(--color-gray-dark)"
       >
-        {cardText}
+        {name}
       </TypographyText>
     </div>
   );
 };
-
-const Component = ({ cardText, maxHeightPx, passedIndex }: TProps) => {
-  const isCropped = !!maxHeightPx;
-  return (
-    cardText && (
-      <div
-        className={clsx(styles.Card)}
-        style={
-          isCropped
-            ? ({ [`--max-height`]: `${maxHeightPx}px` } as CSSProperties)
-            : {}
-        }
-      >
-        <div
-          className={clsx(styles.Content, { [styles.__cropped]: isCropped })}
-        >
-          {cardText.split("\n").map((line: string, index: number) => (
-            <p
-              key={utilComponentKey(
-                `${passedIndex ?? -1}-CardContentLine`,
-                index,
-              )}
-            >
-              <TypographyText size={18} color="var(--font-color-gray)">
-                {line}
-              </TypographyText>
-            </p>
-          ))}
-        </div>
-        {isCropped && (
-          <div className={styles.Footer}>
-            {(["copy", "delete"] as TCardActionType[]).map(
-              (actionType: TCardActionType, index: number) => (
-                <CardAction
-                  key={utilComponentKey(
-                    `${passedIndex ?? -1}-CardAction`,
-                    index,
-                  )}
-                  cardText={cardText}
-                  actionType={actionType}
-                />
-              ),
-            )}
-          </div>
-        )}
-      </div>
-    )
-  );
-};
-
-export { Component as Card };
