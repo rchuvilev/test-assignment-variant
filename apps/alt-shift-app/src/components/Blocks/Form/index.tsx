@@ -4,7 +4,10 @@ import style from "./index.module.css";
 import { TData } from "../../../features/ApplicationsData/applicationsData.model.ts";
 import { utilComponentKey } from "../../../misc/utilComponentKey.ts";
 import { CtaButton } from "../../Atoms/CtaButton";
-import { CONST_TEXT_SUBMIT_BUTTON_TEXT } from "../../../misc/consts.ts";
+import {
+  CONST_TEXT_SUBMIT_BUTTON_DONE_TEXT,
+  CONST_TEXT_SUBMIT_BUTTON_TEXT,
+} from "../../../misc/consts.ts";
 import { FocusEventHandler, useContext, useState } from "react";
 import { AppContext } from "../../../App.tsx";
 import { utilDevLogger } from "../../../misc/utilDevLogger.ts";
@@ -56,6 +59,7 @@ const Form = ({ formData }: TProps) => {
       },
     });
   };
+
   const Fields = () =>
     Object.entries(formData)
       .map(([key, value]) => {
@@ -72,18 +76,31 @@ const Form = ({ formData }: TProps) => {
           {...fieldData}
         />
       ));
+
   const SubmitButton = () => {
+    const isFormDone = formData.result && formData.result.length > 1;
+    const buttonIcon = isSubmitting
+      ? "./icons/loader.svg"
+      : isFormDone
+        ? "./icons/refresh.svg"
+        : "";
+    const buttonText = isSubmitting
+      ? ""
+      : isFormDone
+        ? CONST_TEXT_SUBMIT_BUTTON_DONE_TEXT
+        : CONST_TEXT_SUBMIT_BUTTON_TEXT;
     return (
       <Submit asChild>
         <CtaButton
           mode={"fullwidth"}
+          icon={buttonIcon}
           className={clsx(
             style.SubmitButton,
             { [style.__submitting]: isSubmitting },
-            { [style.__disabled]: isSubmitting },
+            { [style.__retry]: isFormDone },
           )}
         >
-          {CONST_TEXT_SUBMIT_BUTTON_TEXT}
+          {buttonText}
         </CtaButton>
       </Submit>
     );

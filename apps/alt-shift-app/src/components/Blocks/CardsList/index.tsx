@@ -17,6 +17,7 @@ const Component = ({ dataset }: TProps) => {
             key={utilComponentKey("CardsList", index)}
             cardText={data?.result}
             maxHeightPx={240}
+            passedIndex={index}
           />
         ))}
       </div>

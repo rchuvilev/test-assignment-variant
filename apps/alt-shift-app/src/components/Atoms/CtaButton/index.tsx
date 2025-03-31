@@ -9,6 +9,8 @@ import { EPageViews } from "../../../features/PageView/pageView.model.ts";
 type TProps = {
   mode?: "small" | "medium" | "fullwidth";
   handleClick?: Function;
+  icon?: string;
+  children?: React.ReactElement | string;
 } & Partial<React.ComponentProps<any>>;
 
 const Component = (props: TProps) => {
@@ -29,7 +31,7 @@ const Component = (props: TProps) => {
         { [styles.__fullwidth]: isFullwidth },
       )}
       mode={props.mode ?? "small"}
-      iconUrl={"./icons/plus.svg"}
+      iconUrl={props.icon ?? "./icons/plus.svg"}
       onClick={handleClick}
     >
       <TypographyText
@@ -38,7 +40,7 @@ const Component = (props: TProps) => {
         className={styles.CtaButton}
         {...props}
       >
-        {CONST_TEXT_CTA_BUTTON_TEXT}
+        {props.children ?? CONST_TEXT_CTA_BUTTON_TEXT}
       </TypographyText>
     </Button>
   );

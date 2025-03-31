@@ -30,7 +30,7 @@ const useApplicationsData = (): TApplicationsContext => {
   const [currentApplicationIndex, setCurrentApplicationIndex] =
     useState<number>(getCurrIndex(dataset));
 
-  const isApplicationFull = !!dataset[currentApplicationIndex].result;
+  const isApplicationFull = !!dataset[currentApplicationIndex]?.result;
   const isApplicationLast =
     currentApplicationIndex === applicationsDataHelper.maxDataLength - 1;
 

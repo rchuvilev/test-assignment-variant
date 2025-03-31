@@ -16,7 +16,7 @@ const Component = ({}: TProps) => {
     <div className={"html_page-row"}>
       <section className={clsx(style.FormView)}>
         <Form formData={formData} />
-        <Card cardText={result} />
+        <Card cardText={result || " "} />
       </section>
       {!isApplicationLast && <CtaBlock />}
     </div>

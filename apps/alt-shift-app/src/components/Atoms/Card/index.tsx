@@ -6,10 +6,12 @@ import {
   CONST_TEXT_CARD_ACTION_COPY,
   CONST_TEXT_CARD_ACTION_DELETE,
 } from "../../../misc/consts.ts";
+import { utilComponentKey } from "../../../misc/utilComponentKey.ts";
 
 type TProps = {
   cardText: string;
   maxHeightPx?: number;
+  passedIndex?: number;
 };
 
 type TCardActionType = "copy" | "delete";
@@ -54,7 +56,7 @@ const CardAction = ({ actionType, cardText }: TCardActionProps) => {
   );
 };
 
-const Component = ({ cardText, maxHeightPx }: TProps) => {
+const Component = ({ cardText, maxHeightPx, passedIndex }: TProps) => {
   const isCropped = !!maxHeightPx;
   return (
     cardText && (
@@ -69,8 +71,13 @@ const Component = ({ cardText, maxHeightPx }: TProps) => {
         <div
           className={clsx(styles.Content, { [styles.__cropped]: isCropped })}
         >
-          {cardText.split("\n").map((line: string) => (
-            <p>
+          {cardText.split("\n").map((line: string, index: number) => (
+            <p
+              key={utilComponentKey(
+                `${passedIndex ?? -1}-CardContentLine`,
+                index,
+              )}
+            >
               <TypographyText size={18} color="var(--font-color-gray)">
                 {line}
               </TypographyText>
@@ -80,8 +87,15 @@ const Component = ({ cardText, maxHeightPx }: TProps) => {
         {isCropped && (
           <div className={styles.Footer}>
             {(["copy", "delete"] as TCardActionType[]).map(
-              (actionType: TCardActionType) => (
-                <CardAction cardText={cardText} actionType={actionType} />
+              (actionType: TCardActionType, index: number) => (
+                <CardAction
+                  key={utilComponentKey(
+                    `${passedIndex ?? -1}-CardAction`,
+                    index,
+                  )}
+                  cardText={cardText}
+                  actionType={actionType}
+                />
               ),
             )}
           </div>

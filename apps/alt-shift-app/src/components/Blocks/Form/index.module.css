@@ -89,10 +89,10 @@ button:has(.SubmitButton) {
     background-position: center;
     background-size: 80px 80px;
     z-index: 10;
-    animation: anim_loading 2s ease-in-out infinite;
+    animation: anim_card_loading 2s ease-in-out infinite;
 }
 
-@keyframes anim_loading {
+@keyframes anim_card_loading {
     0% {
         background-size: 80px 80px;
     }
@@ -103,3 +103,25 @@ button:has(.SubmitButton) {
         background-size: 80px 80px;
     }
 }
+
+button:has(.__submitting):before {
+    animation: anim_spin_loader 2s linear infinite;
+}
+
+button:has(.__retry) {
+    background-color: transparent;
+    border-color: var(--color-gray-light);
+}
+
+@keyframes anim_spin_loader {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+

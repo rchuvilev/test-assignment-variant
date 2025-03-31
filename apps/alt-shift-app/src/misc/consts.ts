@@ -11,6 +11,7 @@ export const CONST_CUSTOM_EVENT_NAME_CHANGE_VIEW: string = "update-tab-name";
 
 export const CONST_TEXT_CTA_BUTTON_TEXT: string = "Create New";
 export const CONST_TEXT_SUBMIT_BUTTON_TEXT: string = "Generate Now";
+export const CONST_TEXT_SUBMIT_BUTTON_DONE_TEXT: string = "Try Again";
 export const CONST_TEXT_CARD_ACTION_DELETE: string = "Delete";
 export const CONST_TEXT_CARD_ACTION_COPY: string = "Copy to clipboard";
 export const CONST_TEXT_FORM_TEXTAREA_MAX_CHARS: number = 1200;
