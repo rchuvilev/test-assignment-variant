@@ -1,4 +1,6 @@
 import { TData } from "../ApplicationsData/applicationsData.model.ts";
+import { getApiKey } from "./aiAPIKey.ts";
+import { CONST_API_URL } from "../../misc/consts.ts";
 
 export const aiRequest = async ({
   reqData,
@@ -13,7 +15,10 @@ export const aiRequest = async ({
 }) => {
   const simulateLongerRequest = () =>
     new Promise((resolve) => setTimeout(() => resolve("Response"), 3000));
-  const loadAiResponse = async () => Object.values(reqData).join("\n");
+  const loadAiResponse = async () =>
+    fetch(CONST_API_URL, {
+      method: "POST",
+    });
   let result: any = null;
   try {
     result = await Promise.all([

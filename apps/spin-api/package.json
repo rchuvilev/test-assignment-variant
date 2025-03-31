@@ -1,0 +1,11 @@
+{
+  "name": "spin-api",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "cd ./openai-request && npm run dev",
+    "build": "cd ./openai-request && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "private": true
+}
