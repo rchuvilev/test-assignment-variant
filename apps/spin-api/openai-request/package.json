@@ -1,11 +1,12 @@
 {
-    "name": "openai-request",
+    "name": "openai-request-vjsnvahc",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
         "dev": "npm run build && spin up",
         "build": "npx webpack --mode=production && npx mkdirp target && npx j2w -i dist.js -d combined-wit -n combined -o target/openai-request.wasm ",
+        "publish": "npm run build && spin deploy",
         "test": "echo \"Error: no test specified\" && exit 1",
         "postinstall": "knitwit"
     },

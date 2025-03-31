@@ -15,6 +15,13 @@ source = "target/openai-request.wasm"
 exclude_files = ["**/node_modules"]
 allowed_outbound_hosts = ["https://api.openai.com"]
 
+[component.openai-request.variables]
+cors_allowed_origins = "*"
+cors_allowed_methods = "GET, POST, PUT, DELETE, OPTIONS"
+cors_allowed_headers = "*"
+cors_allow_credentials = "true"
+cors_max_age = "3600"
+
 [component.openai-request.build]
 command = "npm run build"
 watch = ["src/**/*.ts", "package.json"]

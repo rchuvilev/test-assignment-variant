@@ -6,9 +6,11 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "publish": "bun run build && gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "homepage": "https://rchuvilev.github.io/test-assignment-variant/",
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
