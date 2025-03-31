@@ -4,6 +4,7 @@ import styles from "./index.module.css";
 import { TypographyTitle } from "../../Atoms/TypographyTitle";
 import { TypographyText } from "../../Atoms/TypographyText";
 import { CtaButton } from "../../Atoms/CtaButton";
+import { Counter } from "../../Atoms/Counter";
 
 type TProps = {};
 
@@ -29,6 +30,7 @@ const CtaBlock = ({}: TProps) => {
             hired faster
           </TypographyText>
           <CtaButton />
+          <Counter isCta={true} />
         </div>
         <div className={styles.ContentCounter}></div>
       </div>

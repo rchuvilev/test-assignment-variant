@@ -5,6 +5,7 @@ import { TData } from "../../../features/ApplicationsData/applicationsData.model
 import { utilComponentKey } from "../../../misc/utilComponentKey.ts";
 import { CtaButton } from "../../Atoms/CtaButton";
 import {
+  CONST_NOOP_FUNCTION,
   CONST_TEXT_SUBMIT_BUTTON_DONE_TEXT,
   CONST_TEXT_SUBMIT_BUTTON_TEXT,
 } from "../../../misc/consts.ts";
@@ -99,6 +100,7 @@ const Form = ({ formData }: TProps) => {
             { [style.__submitting]: isSubmitting },
             { [style.__retry]: isFormDone },
           )}
+          handleClick={CONST_NOOP_FUNCTION}
         >
           {buttonText}
         </CtaButton>

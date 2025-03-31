@@ -22,7 +22,7 @@
 
 :root {
     --font-family: 'Fixel Text', sans-serif;
-    --font-color-black: #101828;
+    --font-color-black: var(--color-black);
     --font-color-gray: #667085;
 }
 

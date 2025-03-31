@@ -17,6 +17,8 @@ export const CONST_TEXT_CARD_ACTION_COPY: string = "Copy to clipboard";
 export const CONST_TEXT_FORM_TEXTAREA_MAX_CHARS: number = 1200;
 export const CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS: number = 130;
 
+export const CONST_NOOP_FUNCTION = () => {};
+
 export const CONST_API_URL = IS_DEV
   ? "http://localhost:3000"
   : `https://${spinJson.name}.fermyon.app`;

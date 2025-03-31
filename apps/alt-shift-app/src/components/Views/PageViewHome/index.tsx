@@ -12,15 +12,14 @@ type TProps = {
 };
 
 const Component = ({ className }: TProps) => {
-  const { applicationsList, isApplicationFull, doGotoNextApplication } =
-    useContext(AppContext);
+  const { applicationsList, isApplicationFull } = useContext(AppContext);
   return (
     <section className={clsx(className ?? "", style.Home)}>
       <div className={clsx("html_page-row", style.Header)}>
         <TypographyTitle level={1} size={48} className={style.Title}>
           Applications
         </TypographyTitle>
-        <CtaButton handleClick={() => doGotoNextApplication()} mode="small" />
+        <CtaButton mode="small" />
       </div>
       <div className={clsx("html_page-row", style.Content)}>
         <CardsList dataset={applicationsList} />

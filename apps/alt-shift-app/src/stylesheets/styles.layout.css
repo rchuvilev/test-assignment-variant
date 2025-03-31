@@ -68,7 +68,8 @@ body {
     justify-content: flex-start;
     align-items: center;
     margin: 0 0 0 auto;
-    max-width: calc((100% - var(--html-logo-width)) / 2);
+    width: calc(100% - var(--html-logo-width));
+    flex-grow: 1;
 
     @media screen and (max-width: 768px) {
         width: 100%;

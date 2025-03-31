@@ -4,62 +4,18 @@
     --button-radius: 6px;
     --icon-size: 20px;
     --icons-stroke-color: var(--color-icon-black);
-    --counter-dot-size: 8px;
-    --counter-dot-gap: 4px;
-    --counter-dot-radius: 50%;
-    --counter-dot-color: var(--color-black);
 
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     margin: 0 0 0 auto;
     min-height: var(--portal-height);
+    width: 100%;
     justify-content: flex-end;
 
     @media (max-width: 768px) {
         width: 100%;
     }
-}
-
-.CounterContainer {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-
-    &.__empty {
-        & {
-            display: none;
-        }
-    }
-}
-
-.CounterDots {
-    display: flex;
-    flex-wrap: nowrap;
-    margin-left: 1rem;
-    margin-right: 1.5rem;
-    gap: var(--counter-dot-gap);
-}
-
-.CounterDot {
-    display: block;
-    width: var(--counter-dot-size);
-    height: var(--counter-dot-size);
-    border-radius: var(--counter-dot-radius);
-    background-color: var(--counter-dot-color);
-    opacity: .24;
-}
-
-.CounterDotActive {
-    opacity: 1;
-}
-
-.CounterText {
-    display: inline-block;
-    color: var(--font-color-gray);
-    margin: 0;
-    text-align: center;
 }
 
 .Button {
@@ -72,6 +28,14 @@
     border-radius: var(--button-radius);
     border: 1px solid var(--color-gray-light);
     background-color: transparent;
+
+    &:first-child {
+        margin-right: auto;
+    }
+}
+
+.Portal:not(:has([class*="__empty"])) .Button:first-child {
+    display: none;
 }
 
 .Icon {
@@ -89,8 +53,8 @@
 }
 
 @media (max-width: 412px) {
-    .CounterContainer,
-    .CounterDots,
+    [class*="CounterContainer"],
+    [class*="CounterDots"],
     .Button {
         margin-top: 1rem;
     }

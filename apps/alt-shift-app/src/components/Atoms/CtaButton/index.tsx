@@ -5,6 +5,8 @@ import clsx from "clsx";
 import { triggerPageViewChange } from "../../../features/PageView/usePageView.tsx";
 import { CONST_TEXT_CTA_BUTTON_TEXT } from "../../../misc/consts.ts";
 import { EPageViews } from "../../../features/PageView/pageView.model.ts";
+import { useContext } from "react";
+import { AppContext } from "../../../App.tsx";
 
 type TProps = {
   mode?: "small" | "medium" | "fullwidth";
@@ -14,6 +16,7 @@ type TProps = {
 } & Partial<React.ComponentProps<any>>;
 
 const Component = (props: TProps) => {
+  const { doGotoNextApplication } = useContext(AppContext);
   const mode = props.mode ?? "medium";
   const isSmall = mode && mode === "small";
   const isFullwidth = mode === "fullwidth";
@@ -21,6 +24,7 @@ const Component = (props: TProps) => {
   const handleClick = () => {
     handleClickProp && handleClickProp();
     !handleClickProp && triggerPageViewChange(EPageViews.FORM);
+    !handleClickProp && doGotoNextApplication();
   };
 
   return (
