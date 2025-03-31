@@ -40,7 +40,7 @@ const HeaderPortal = ({}: TProps) => {
         <Button className={style.Button} onClick={handleClick}>
           <Icon
             className={style.Icon}
-            src={"/icons/home.svg"}
+            src={"./icons/home.svg"}
             alt="Go to dashboard"
           />
         </Button>
@@ -62,7 +62,7 @@ function Counter() {
       {isFull && (
         <img
           className={style.FullIcon}
-          src={"/icons/checkbox.svg"}
+          src={"./icons/checkbox.svg"}
           alt="Full"
         />
       )}

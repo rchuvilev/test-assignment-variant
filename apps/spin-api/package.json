@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "cd ./openai-request && npm run dev",
     "build": "cd ./openai-request && npm run build",
+    "publish": "cd ./openai-request && npm run publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "private": true

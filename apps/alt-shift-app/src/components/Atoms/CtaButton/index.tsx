@@ -29,7 +29,7 @@ const Component = (props: TProps) => {
         { [styles.__fullwidth]: isFullwidth },
       )}
       mode={props.mode ?? "small"}
-      iconUrl={"/icons/plus.svg"}
+      iconUrl={"./icons/plus.svg"}
       onClick={handleClick}
     >
       <TypographyText
