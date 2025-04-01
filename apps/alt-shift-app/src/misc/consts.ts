@@ -1,5 +1,6 @@
 import { TData } from "../features/ApplicationsData/applicationsData.model.ts";
-import spinJson from "../../../spin-api/openai-request/package.json";
+
+// Exported separately for less data importing
 
 export const IS_DEV: boolean = window.location.hostname === "localhost";
 export const CONST_APPLICATIONS_NUMBER_MAX: number = 5;
@@ -21,7 +22,7 @@ export const CONST_NOOP_FUNCTION = () => {};
 
 export const CONST_API_URL = IS_DEV
   ? "http://localhost:3000"
-  : `https://${spinJson.name}.fermyon.app`;
+  : "https://openai-request-vjsnvahc.fermyon.app";
 
 export const CONST_FALLBACK_LETTER_TEMPLATE = ({
   Company,

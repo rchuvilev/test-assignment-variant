@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "publish": "bun run build && gh-pages -d dist",
+    "prebuild": "bun .node.prebuild.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -1,36 +1,44 @@
-# Variant Frontend Test Task
+# Test assignment for Variant
+
+**Репозиторий:** https://github.com/rchuvilev/test-assignment-variant
+
+**Страница:** https://rchuvilev.github.io/test-assignment-variant
+
+**Readme: https://rchuvilev.github.io/test-assignment-variant/readme.html**
+
+**Структура проекта**: 
+
+- _apps/alt-shift-app_ - Frontend
+- _apps/spin-api_ - Backend
+- _packages/ui-kit_ - Shared компоненты UI (задел на будущее)
+
+Поработал над системой компонентов и глобальных стилей.
+
+В логике постарался соблюсти feature-slice подход к структуре и использованию.
 
 ## Технологический стек
 
 ### Frontend: React + TypeScript + Vite
 
-Выбрал Vite, потому что он удобен, быстр, современен и, как запомнил из разговора, используется в проектах Variant.
+**Vite**, потому что он удобен, быстр, современен и, как запомнил из разговора, используется в проектах Variant.
 
-Выбрал React+TS как требуемый стек по заданию, в виде SPA, а не SSR, так как там один сервис по сути. SEO оптимизации
+**React+TS** как требуемый стек по заданию, в виде SPA, а не SSR, так как там один сервис по сути. SEO оптимизации
 можно впилить в html-темплейт, в случае очень необходимого сочетания статичного Semantic HTML с динамичными React-компонентами
 можно сделать workaround с React.Portal-ами.
 
-### Backend-like: Spin
-
-Требование - хранение данных на фронте + мы обсуждали на собесе идеи по хранению sensitive-данных в браузере.
-Spin - продукт от разработчиков [сервиса fermyon](https://fermyon.com/), который позволяет преобразовывать код на различных
-языках (включая TS) в WebAssembly (используется в их serverless-функциях), который работает в браузере.
-По сути, это бекенд-подобный код, который работает на фронте. Но, главное, он скомпилирован. Собираюсь использовать его для
-хранения API-key и вызывать WASM функции, при инициализации которых будет проверяться объект window (window.location.hostname).
-
-Эта базовая защита от вызова кода на других доменах. Можно обойти локально, подредактировав localhost, но это уже оверхед для
-халявщиков. В любом случае, чтобы забрать сам ключ, нужно декомпилировать WASM и реверс-инженирить, а если человек готов так
-поработать, то взломать можно всё, что угодно.
-
-### Репозиторий и runtime
-
-Монорепо на turbopack (также используется в проектах Variant), так как нужно хочу разделить фронт и бекенд-подобный код,
-плюс, возможно в будущем захочется добавить, например, отдельных микрофронтендов / переиспользовать компоненты как
+В виде **монорепо на turbopack** (также используется в проектах Variant), так как хотел разделить фронт и бекенд код,
+плюс, добавить, например, отдельных микрофронтендов / переиспользовать компоненты как
 отдельный ui-kit какой-нибудь.
 
 Также бонусом turbopack является наиболее распространённые пресеты TypeScript + ESLint + Prettier, которые я собираюсь использовать.
-
 Компенсация оверхеда монорепозитория - дальнейшие масштабируемость и удобство разработки.
+
+### Backend: serverless функция на [Fermyon](https://www.fermyon.com/)
+
+Требование - хранение данных на фронте + мы обсуждали на собесе идеи по хранению sensitive-данных в браузере.
+Хотел закомпилировать ключ в WASM модуль, чтобы отдавал для нашего домена, но всё равно ключ должен попасть в браузерный запрос, так что залил как cloud функцию.
+
+### Runtime: [Bun](https://bun.sh/)
 
 Запускаться проект будет в Bun, потому что он быстр в установке зависимостей, разработке и удобен для монорепозиториев.
 Ещё он имеет множество инструментов "из коробки", например, я собираюсь использовать как минимум поддержку WASM и встроенную
@@ -40,54 +48,27 @@ Spin - продукт от разработчиков [сервиса fermyon](h
 
 ### Груминг и декомпозиция
 
+#### Логика
+
+Несколько раз переделывал (этого можно было избежать при согласовании с командой, но раз уж это моё тестовое...).
+
+Идея была достичь наилучшего UX, чем я усложнил себе жизнь. Однако, достиг следующие фичи-проблемы-решения:
+
+1) Я решил предоставить пользователю _возможность редактировать заявки_ (после оплаты подписки), поэтому храню стейт полей каждой заявки.
+2) Я хотел _возможности видеть валидность в процессе заполнения поля_, не на onBlur (=> бесконтрольная нативная форма: любые хуки передергивают стейт, вызывая перерендер).
+
+**Минусы**: немного велосипеда.
+
+**Плюсы**: добился желаемого UX, организовал самописное в удобный класс / компоненты / хуки.
+
+
 #### Frontend
 
-1. **2 Скрина:**
+1. **2 Скрина**: Дашборд, Форма
+2. **4 Блока:**: Хедер, Письмо, Форма, CTA-Блок.
+![analysis.blocks.png](https://github.com/rchuvilev/test-assignment-variant/blob/main/.readme/analysis.blocks.png?raw=true)
+3. **5 Компонентов**: Карточка, счётчик, кнопка, типографика.
++ 3 основы в ui-ките: Базовая кнопка, Карусель, Иконки
 
-- Дашборд
-- Форма
-
-2. **4 Блока:** ![analysis.blocks.png](.readme/analysis.blocks.png)
-
-- Хедер
-- Письмо
-- Форма
-- CTA-Блок
-
-3. **Дерево компонентов**: <br>
-
-- -- Header - думаю, должен быть частью статичного html, 2 ссылки и <br>
-  ---- Logo <br>
-  ---- ApplicationsCounter (ПОРТАЛ) <br>
-  ---- HomeButton <br>
-- -- TitleRow <br>
-  ---- Title, h1 "Applications" <br>
-  ---- _CtaButton_, button "Create new" (ПОРТАЛ) <br>
-- -- ApplicationPreview: <br>
-  ---- ActionButton: (icon, icon pos, text) "Copy to clipboard", "Delete" <br>
-- Reused components: <br>
-  -- CtaButton ("Create new", Form Submit) <br>
-  -- ApplicationsCounter (Header, CtaBlock) <br>
-  -- Typography/TextSubtitle, h2 (Job title in form, "Hit your goal" in CTA block) <br>
-  -- Typography/TextL, p 18/28 (AppCard text, Form) <br>
-  -- Typography/TextM, p 18/28 (CtaBlock text, ApplicationsCounter, CtaButton) <br>
-  -- Typography/TextS, p 16/24 (Form inputs, ApplicationPreviewButton) <br>
-  -- Typography/TextXS, p 14/20 (Form labels, ) <br>
-  -- Icons 20x20 (copy, delete, refresh form, etc.) <br>
-
-#### Logic, State
-
-- State: Applications count (on top), Active page (dashboard / form), isFull (5/5 applications)
-- Storage: Applications (LocalStorage, caching)
-- API-provider for actions: (backend-like, spin)
-
-#### Опциональные улучшения
-
-- Simulate slow API response (form states: borders, button state) - UI/UX
-- Application loading animation (+ in ApplicationsList) - UI/UX
-- Fingerprints, device detection + analytics (for tracking), GA, Hotjar - Analytics
-- Tests coverage (unit, integration, e2e) - Testing
-
-## Структура проекта (на базе анализа)
-
-## Обзор "требования - инструменты"
+#### Backend
+Простая серверлесс-функция для запроса к OpenAI. Сейчас используется фоллбэк на основе предоставленного темплейта, судя по ошибке, ключ просрочился.

@@ -5,6 +5,7 @@ try {
   [
     "bun install",
     "bun add -g turborepo",
+    "bun add -g pandoc",
     `
      pushd ./apps/spin-api &&
      curl -fsSL https://developer.fermyon.com/downloads/install.sh | bash &&

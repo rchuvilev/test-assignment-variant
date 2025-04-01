@@ -30,6 +30,9 @@
     "clsx": "^2.1.1",
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
-    "react-hook-form": "^7.55.0"
+    "fs-extra": "^11.3.0",
+    "markdown-it": "^14.1.0",
+    "react-hook-form": "^7.55.0",
+    "rimraf": "^6.0.1"
   }
 }
