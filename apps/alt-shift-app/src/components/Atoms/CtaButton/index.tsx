@@ -14,6 +14,7 @@ type TProps = {
   icon?: string;
   children?: React.ReactElement | string;
   color?: string;
+  disabled?: boolean;
 } & Partial<React.ComponentProps<any>>;
 
 const Component = (props: TProps) => {
@@ -38,6 +39,7 @@ const Component = (props: TProps) => {
       mode={props.mode ?? "small"}
       iconUrl={props.icon ?? "./icons/plus.svg"}
       onClick={handleClick}
+      disabled={props.disabled ?? false}
     >
       <TypographyText
         size={isSmall ? 16 : 18}

@@ -6,6 +6,7 @@ type Props = {
   iconUrl?: string;
   children: React.ReactNode;
   ref?: React.Ref<any>;
+  disabled?: boolean;
 } & React.ComponentProps<any>;
 
 const Component = (props: Props) => {
@@ -25,6 +26,7 @@ const Component = (props: Props) => {
           ? ({ ["--icon-url"]: `url("${iconUrl}")` } as CSSProperties)
           : {}
       }
+      disabled={props.disabled ?? false}
     >
       {props.children}
     </button>

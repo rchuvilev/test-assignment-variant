@@ -38,7 +38,7 @@ const Component = ({ isCta }: TProps) => {
           <div
             key={utilComponentKey("HeaderApplicationsCounter", i)}
             className={clsx(styles.CounterDot, {
-              [styles.CounterDotActive]: currApplicationIndex > i,
+              [styles.CounterDotActive]: count > i || count === maxApplications,
             })}
           />
         ))}

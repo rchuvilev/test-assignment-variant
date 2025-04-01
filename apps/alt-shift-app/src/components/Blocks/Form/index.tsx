@@ -53,7 +53,6 @@ const Form = ({ formData }: TProps) => {
           err,
           'result is set to ""',
         );
-        doCurrApplicationUpdate({ result: "" }, true);
       },
       onFinally: () => {
         setIsSubmitting(false);
@@ -101,6 +100,7 @@ const Form = ({ formData }: TProps) => {
             { [style.__retry]: isFormDone },
           )}
           color={isFormDone ? "var(--font-color-black)" : "var(--color-white)"}
+          disabled={isSubmitting}
           handleClick={CONST_NOOP_FUNCTION}
         >
           {buttonText}

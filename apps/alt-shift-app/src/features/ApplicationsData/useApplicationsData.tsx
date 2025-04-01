@@ -40,14 +40,18 @@ const useApplicationsData = (): TApplicationsContext => {
     isApplicationFull;
 
   const currDataGet = () => ({ ...dataset[currentApplicationIndex] });
-  const currDataSet = (data: Partial<TData>, doUpdateState: boolean = true) => {
+  const currDataSet = (
+    data: Partial<TData>,
+    doUpdateState: boolean = true,
+    gotoNext: boolean = false,
+  ) => {
     const currentData = currDataGet();
     const updatedData = { ...currentData, ...data };
     const newDataset = [...dataset];
     newDataset[currentApplicationIndex] = updatedData;
     applicationsDataHelper.data = newDataset;
-    doUpdateState && setDataset(newDataset);
-    doUpdateState && doGotoNextApplication();
+    (doUpdateState || gotoNext) && setDataset(newDataset);
+    gotoNext && doGotoNextApplication();
   };
   const doGotoNextApplication = () => {
     if (!isApplicationFull) return console.log("Application is not full");

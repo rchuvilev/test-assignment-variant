@@ -10,7 +10,7 @@ type TProps = {
 const Component = ({ className, children }: TProps) => {
   const [emblaRef] = useEmblaCarousel({
     dragFree: true,
-    loop: true,
+    // loop: true,
     containScroll: "trimSnaps",
     align: "start",
   });

@@ -1,6 +1,7 @@
 import { ResponseBuilder } from "@fermyon/spin-sdk";
 import { OpenAI } from "openai";
 import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
+import { TData } from "alt-shift-app/src/features/ApplicationsData/applicationsData.model";
 
 const controller = new AbortController();
 const signal = controller.signal;
@@ -11,12 +12,6 @@ const openai = new OpenAI({
 
 export async function handler(req: Request, res: ResponseBuilder) {
   const origin = req.headers.get("Origin") || req.headers.get("Referer") || "";
-  console.log(
-    11111111,
-    req,
-    req.headers.get("Origin"),
-    req.headers.get("Referer"),
-  );
   const isDev =
     !origin || origin.includes("localhost") || origin.includes("127.0.0.1");
   console.log("Origin: ", origin, isDev);
@@ -31,13 +26,37 @@ export async function handler(req: Request, res: ResponseBuilder) {
     res.status(401);
     return res.send(JSON.stringify({ [res.statusCode]: "Unauthorized" }));
   }
-  let reqBody;
+  let params: any;
   try {
-    const reqBodyJSON = await req.text();
-    reqBody = JSON.parse(reqBodyJSON);
+    console.log("req.body", req.body);
+    // const body = new TextDecoder().decode(req.body as any);
+    let bodyText = "";
+    const reader = req.body?.getReader();
+    if (reader) {
+      let { done, value } = await reader.read();
+      console.log("reading", reader, done, value);
+      while (!done) {
+        if (done) {
+          break;
+        }
+        bodyText += new TextDecoder().decode(value, { stream: true });
+        ({ done, value } = await reader.read());
+      }
+    }
+    console.log("bodyText", bodyText);
+    try {
+      params = JSON.parse(bodyText);
+    } catch (e) {
+      console.error("Error parsing JSON from request", e);
+      params = {};
+      for (const [key, value] of new URLSearchParams(bodyText)) {
+        params[key] = value;
+      }
+    }
+    console.log("params", params);
   } catch (e) {
     console.error("Error parsing data from request", e);
-    reqBody = isDev
+    params = isDev
       ? {
           Job_title: "FALLBACK, Software Engineer",
           Company: "FALLBACK, OpenAI",
@@ -47,10 +66,13 @@ export async function handler(req: Request, res: ResponseBuilder) {
         }
       : "";
   }
-  let msg;
-  if (!reqBody) {
-    const prompt = generatePrompt(reqBody);
-    msg = await fetchCompletion(prompt).catch((err: any) => console.error);
+  let msg = null;
+  if (params) {
+    console.log("params check", typeof params, JSON.stringify(params, null, 2));
+    const prompt = generatePrompt(params as TData);
+    console.log("prompt", prompt);
+    msg = await fetchCompletion(prompt).catch(console.error);
+    console.log("msg", msg);
   } else {
     msg = "";
   }
