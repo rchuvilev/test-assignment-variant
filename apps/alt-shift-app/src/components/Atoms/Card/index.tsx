@@ -12,19 +12,26 @@ type TProps = {
   cardText: string;
   maxHeightPx?: number;
   passedIndex?: number;
+  className?: string;
 };
 
-const Component = ({ cardText, maxHeightPx, passedIndex }: TProps) => {
+const Component = ({
+  cardText,
+  maxHeightPx,
+  passedIndex,
+  className,
+}: TProps) => {
   const isCropped = !!maxHeightPx;
   return (
     cardText && (
       <div
-        className={clsx(styles.Card)}
+        className={clsx(styles.Card, className ?? "")}
         style={
           isCropped
             ? ({ [`--max-height`]: `${maxHeightPx}px` } as CSSProperties)
             : {}
         }
+        data-index={passedIndex}
       >
         <div
           className={clsx(styles.Content, { [styles.__cropped]: isCropped })}

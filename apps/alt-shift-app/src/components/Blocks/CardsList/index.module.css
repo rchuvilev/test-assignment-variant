@@ -20,3 +20,39 @@
         }
     }
 }
+
+.MobileCarousel {
+    --gap: 16px;
+
+    [class*="embla__container"] {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: var(--gap);
+        padding: 0 var(--gap);
+    }
+
+    [class*="embla__slide"] {
+        height: 50dvh;
+        flex: 0 0 calc(100dvw - 32px * 2);
+        --size: 2ch;
+        --color: var(--color-gray-dark);
+
+        &:before {
+            content: attr(data-index);
+            position: absolute;
+            z-index: 5;
+            left: calc(-32px - var(--gap) - var(--size));
+            font-weight: bold;
+            text-align: center;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color);
+            width: var(--size);
+            height: var(--size);
+            border: 1px solid var(--color);
+        }
+    }
+}

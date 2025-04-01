@@ -28,6 +28,8 @@
     "@radix-ui/react-form": "^0.1.2",
     "@radix-ui/react-portal": "^1.1.4",
     "clsx": "^2.1.1",
+    "embla-carousel-autoplay": "^8.5.2",
+    "embla-carousel-react": "^8.5.2",
     "react-hook-form": "^7.55.0"
   }
 }

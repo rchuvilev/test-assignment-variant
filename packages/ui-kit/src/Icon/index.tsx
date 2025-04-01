@@ -1,21 +1,22 @@
 import clsx from "clsx";
-import style from "./index.module.css";
+import styles from "./index.module.css";
 
-type CtaButtonProps = {
+type Props = {
   width?: number;
   height?: number;
   className?: string;
 } & React.ComponentProps<"img">;
-const Icon = (props: CtaButtonProps) => {
+
+const Component = (props: Props) => {
   const { width, height, className, ...rest } = props;
   return (
     <img
       {...rest}
-      className={clsx(className ?? "", style.Icon)}
+      className={clsx(className ?? "", styles.Icon)}
       width={width ?? 20}
       height={height ?? 20}
     />
   );
 };
 
-export { Icon };
+export { Component as Icon };

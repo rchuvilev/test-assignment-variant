@@ -1,14 +1,14 @@
-import style from "./index.module.css";
 import clsx from "clsx";
+import styles from "./index.module.css";
 import { CSSProperties } from "react";
 
-type ButtonProps = {
+type Props = {
   iconUrl?: string;
   children: React.ReactNode;
   ref?: React.Ref<any>;
 } & React.ComponentProps<any>;
 
-const Button = (props: ButtonProps) => {
+const Component = (props: Props) => {
   const { iconUrl } = props;
   const cleanProps = { ...props };
   delete cleanProps.iconUrl;
@@ -16,8 +16,8 @@ const Button = (props: ButtonProps) => {
     <button
       {...cleanProps}
       className={clsx(
-        style.Button,
-        { [style.__icon]: !!iconUrl },
+        styles.Button,
+        { [styles.__icon]: !!iconUrl },
         props?.className ?? "",
       )}
       style={
@@ -31,4 +31,4 @@ const Button = (props: ButtonProps) => {
   );
 };
 
-export { Button };
+export { Component as Button };

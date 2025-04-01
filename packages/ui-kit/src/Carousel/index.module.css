@@ -1,0 +1,7 @@
+.Carousel {
+    overflow: hidden;
+}
+
+.Container {
+    display: flex;
+}
