@@ -90,12 +90,12 @@ const CardAction = ({ actionType, cardText, cardIndex }: TCardActionProps) => {
   let iconUrl, name, handleClick;
   switch (actionType) {
     case "copy":
-      iconUrl = "./icons/copy.svg";
+      iconUrl = "/test-assignment-variant/icons/copy.svg";
       name = CONST_TEXT_CARD_ACTION_COPY;
       handleClick = () => navigator.clipboard.writeText(cardText);
       break;
     case "delete":
-      iconUrl = "./icons/delete.svg";
+      iconUrl = "/test-assignment-variant/icons/delete.svg";
       name = CONST_TEXT_CARD_ACTION_DELETE;
       handleClick = () =>
         cardIndex !== undefined && doRemoveApplication(cardIndex);

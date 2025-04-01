@@ -37,7 +37,7 @@ const Component = (props: TProps) => {
         { [styles.__fullwidth]: isFullwidth },
       )}
       mode={props.mode ?? "small"}
-      iconUrl={props.icon ?? "./icons/plus.svg"}
+      iconUrl={props.icon ?? "/test-assignment-variant/icons/plus.svg"}
       onClick={handleClick}
       disabled={props.disabled ?? false}
     >

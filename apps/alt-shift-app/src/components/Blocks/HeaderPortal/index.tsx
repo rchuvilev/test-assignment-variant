@@ -45,7 +45,7 @@ const HeaderPortal = ({}: TProps) => {
     <Button className={style.Button} onClick={handleClick}>
       <Icon
         className={style.Icon}
-        src={"./icons/home.svg"}
+        src={"/test-assignment-variant/icons/home.svg"}
         alt="Go to dashboard"
       />
     </Button>

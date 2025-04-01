@@ -80,9 +80,9 @@ const Form = ({ formData }: TProps) => {
   const SubmitButton = () => {
     const isFormDone = isApplicationFull;
     const buttonIcon = isSubmitting
-      ? "./icons/loader.svg"
+      ? "/test-assignment-variant/icons/loader.svg"
       : isFormDone
-        ? "./icons/refresh.svg"
+        ? "/test-assignment-variant/icons/refresh.svg"
         : "";
     const buttonText = isSubmitting
       ? ""

@@ -2,14 +2,14 @@
     font-family: 'Fixel Title';
     font-style: normal;
     font-weight: 600;
-    src: url('./fonts/FixelDisplay-Bold.ttf') format('truetype');
+    src: url('/fonts/FixelDisplay-Bold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Fixel Text';
     font-style: normal;
     font-weight: 400;
-    src: url('./fonts/FixelText-Regular.ttf') format('truetype');
+    src: url('/fonts/FixelText-Regular.ttf') format('truetype');
 }
 
 
@@ -17,7 +17,7 @@
     font-family: 'Fixel Text Bold';
     font-style: normal;
     font-weight: 600;
-    src: url('./fonts/FixelText-Bold.ttf') format('truetype');
+    src: url('/fonts/FixelText-Bold.ttf') format('truetype');
 }
 
 :root {

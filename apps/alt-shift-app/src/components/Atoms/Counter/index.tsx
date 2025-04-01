@@ -29,7 +29,7 @@ const Component = ({ isCta }: TProps) => {
       {isFull && (
         <img
           className={styles.FullIcon}
-          src={"./icons/checkbox.svg"}
+          src={"/test-assignment-variant/icons/checkbox.svg"}
           alt="Full"
         />
       )}
