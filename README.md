@@ -1,10 +1,10 @@
 # Test assignment for Variant
 
-**Репозиторий:** https://github.com/rchuvilev/test-assignment-variant
+**Репозиторий:** [https://github.com/rchuvilev/test-assignment-variant](https://github.com/rchuvilev/test-assignment-variant)
 
-**Страница:** https://rchuvilev.github.io/test-assignment-variant
+**Страница:** [https://rchuvilev.github.io/test-assignment-variant](https://rchuvilev.github.io/test-assignment-variant)
 
-**Readme: https://rchuvilev.github.io/test-assignment-variant/readme.html**
+**Readme**: [https://rchuvilev.github.io/test-assignment-variant/readme.html](https://rchuvilev.github.io/test-assignment-variant/readme.html)
 
 **Структура проекта**: 
 
@@ -72,3 +72,9 @@
 
 #### Backend
 Простая серверлесс-функция для запроса к OpenAI. Сейчас используется фоллбэк на основе предоставленного темплейта, судя по ошибке, ключ просрочился.
+
+### Checks
+
+[![Web vitals](https://github.com/rchuvilev/test-assignment-variant/blob/main/.readme/web-vitals.png?raw=true)](https://pagespeed.web.dev/analysis/https-rchuvilev-github-io-test-assignment-variant/frnu8gwxmz?form_factor=desktop)
+
+[Head order analysis](https://rviscomi.github.io/capo.js/user/demo/?url=https%3A%2F%2Frchuvilev.github.io%2Ftest-assignment-variant%2F)
