@@ -12,7 +12,7 @@ export type TApplicationsContext = {
   ) => void;
   doGotoNextApplication: () => void;
   doGotoXApplicationEdit: (index: number, isSubscriber: boolean) => void;
-  doRemoveApplication: () => void;
+  doRemoveApplication: (index: number) => void;
   isApplicationFull: boolean;
   isApplicationLast: boolean;
 };
@@ -24,15 +24,20 @@ const useApplicationsData = (): TApplicationsContext => {
   const initialDataset: TData[] =
     storedDataset ??
     new Array(applicationsDataHelper.maxDataLength).fill(emptyData);
-  const getCurrIndex = (dataset: TData[]): number =>
-    dataset.findIndex((data: TData) => !data.result) ?? 0; // find first empty application
+  const getCurrIndex = (dataset: TData[]): number => {
+    const foundIndex = dataset.findIndex((data: TData) => !data.result);
+    return foundIndex >= 0
+      ? foundIndex
+      : applicationsDataHelper.maxDataLength - 1;
+  };
   const [dataset, setDataset] = useState<TData[]>(initialDataset);
   const [currentApplicationIndex, setCurrentApplicationIndex] =
     useState<number>(getCurrIndex(dataset));
 
   const isApplicationFull = !!dataset[currentApplicationIndex]?.result;
   const isApplicationLast =
-    currentApplicationIndex === applicationsDataHelper.maxDataLength - 1;
+    currentApplicationIndex === applicationsDataHelper.maxDataLength - 1 &&
+    isApplicationFull;
 
   const currDataGet = () => ({ ...dataset[currentApplicationIndex] });
   const currDataSet = (data: Partial<TData>, doUpdateState: boolean = true) => {
@@ -42,14 +47,22 @@ const useApplicationsData = (): TApplicationsContext => {
     newDataset[currentApplicationIndex] = updatedData;
     applicationsDataHelper.data = newDataset;
     doUpdateState && setDataset(newDataset);
+    doUpdateState && doGotoNextApplication();
   };
   const doGotoNextApplication = () => {
     if (!isApplicationFull) return console.log("Application is not full");
     if (isApplicationLast) return console.log("Application is last");
     const nextIndex = currentApplicationIndex + 1;
+    if (nextIndex >= applicationsDataHelper.maxDataLength)
+      return console.log("Last application filled!");
     const nextApplication = dataset?.[nextIndex];
     if (!nextApplication) return console.log("Application is not found, sorry");
-    setCurrentApplicationIndex(nextIndex);
+    applicationsDataHelper.data = [...dataset];
+    setCurrentApplicationIndex(
+      currentApplicationIndex >= applicationsDataHelper.maxDataLength - 1
+        ? currentApplicationIndex
+        : nextIndex,
+    );
   };
   const doGotoXApplicationEdit = (
     // TODO: use to motivate user to subscribe and work on existing applications without starting new ones from scratch
@@ -57,14 +70,18 @@ const useApplicationsData = (): TApplicationsContext => {
     isSubscriber: boolean | TCheckUserIsSubscriberFunc,
   ) => {
     if (!isSubscriber) return alert("Please subscribe to our product!");
-    if (index < 0 || index >= applicationsDataHelper.maxDataLength)
+    if (index < 0 || index >= applicationsDataHelper.maxDataLength) {
       return alert(`Couldn't find this application... =(`);
+    }
     setCurrentApplicationIndex(index);
   };
-  const doRemoveApplication = () => {
-    const newDataset = [...dataset].slice(currentApplicationIndex, 1);
+  const doRemoveApplication = (index: number) => {
+    const newDataset = [...dataset];
+    newDataset.splice(index, 1);
     newDataset.push(emptyData);
+    applicationsDataHelper.data = newDataset;
     setDataset(newDataset);
+    setCurrentApplicationIndex(getCurrIndex(newDataset));
   };
 
   const applicationsContext: TApplicationsContext = {

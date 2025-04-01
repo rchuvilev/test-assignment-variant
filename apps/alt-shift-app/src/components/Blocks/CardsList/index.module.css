@@ -42,7 +42,7 @@
             content: attr(data-index);
             position: absolute;
             z-index: 5;
-            left: calc(-32px - var(--gap) - var(--size));
+            right: calc(32px + var(--gap));
             font-weight: bold;
             text-align: center;
             border-radius: 50%;

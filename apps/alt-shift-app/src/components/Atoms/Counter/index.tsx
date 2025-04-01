@@ -10,13 +10,14 @@ type TProps = {
 };
 
 const Component = ({ isCta }: TProps) => {
-  const { currApplicationIndex } = useContext(AppContext);
+  const { currApplicationIndex, isApplicationLast } = useContext(AppContext);
   const maxApplications = CONST_APPLICATIONS_NUMBER_MAX;
   const isEmpty = currApplicationIndex === 0;
-  const isFull = currApplicationIndex + 1 === maxApplications;
+  const isFull = isApplicationLast;
+  const count = isApplicationLast ? maxApplications : currApplicationIndex;
   const counterText = !isCta
-    ? `${currApplicationIndex} / ${maxApplications} applications generated`
-    : `${currApplicationIndex} out of ${maxApplications}`;
+    ? `${count} / ${maxApplications} applications generated`
+    : `${count} out of ${maxApplications}`;
   return (
     <div
       className={clsx(styles.CounterContainer, {
@@ -37,7 +38,7 @@ const Component = ({ isCta }: TProps) => {
           <div
             key={utilComponentKey("HeaderApplicationsCounter", i)}
             className={clsx(styles.CounterDot, {
-              [styles.CounterDotActive]: i < currApplicationIndex,
+              [styles.CounterDotActive]: currApplicationIndex > i,
             })}
           />
         ))}

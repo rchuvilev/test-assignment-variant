@@ -15,15 +15,13 @@ const Component = ({ dataset }: TProps) => {
   const CardsList = ({ isCarousel }: { isCarousel?: boolean }) => (
     <>
       {dataset.map((data: TData, index) => (
-        <>
-          <Card
-            key={utilComponentKey("CardsList", index)}
-            cardText={data?.result}
-            maxHeightPx={240}
-            passedIndex={index + 1}
-            className={clsx({ embla__slide: isCarousel })}
-          />
-        </>
+        <Card
+          key={utilComponentKey("CardsList", index)}
+          cardText={data?.result}
+          maxHeightPx={240}
+          passedIndex={index}
+          className={clsx({ embla__slide: isCarousel })}
+        />
       ))}
     </>
   );

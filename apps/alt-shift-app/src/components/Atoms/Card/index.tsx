@@ -1,18 +1,20 @@
 import clsx from "clsx";
 import styles from "./index.module.css";
-import { CSSProperties } from "react";
+import { CSSProperties, useContext } from "react";
 import { TypographyText } from "../TypographyText";
 import {
   CONST_TEXT_CARD_ACTION_COPY,
   CONST_TEXT_CARD_ACTION_DELETE,
 } from "../../../misc/consts.ts";
 import { utilComponentKey } from "../../../misc/utilComponentKey.ts";
+import { AppContext } from "../../../App.tsx";
 
 type TProps = {
   cardText: string;
   maxHeightPx?: number;
   passedIndex?: number;
   className?: string;
+  ref?: any;
 };
 
 const Component = ({
@@ -20,6 +22,7 @@ const Component = ({
   maxHeightPx,
   passedIndex,
   className,
+  ref,
 }: TProps) => {
   const isCropped = !!maxHeightPx;
   return (
@@ -31,7 +34,8 @@ const Component = ({
             ? ({ [`--max-height`]: `${maxHeightPx}px` } as CSSProperties)
             : {}
         }
-        data-index={passedIndex}
+        data-index={(passedIndex ?? 0) + 1}
+        ref={ref}
       >
         <div
           className={clsx(styles.Content, { [styles.__cropped]: isCropped })}
@@ -61,6 +65,7 @@ const Component = ({
                   )}
                   cardText={cardText}
                   actionType={actionType}
+                  cardIndex={passedIndex}
                 />
               ))}
           </div>
@@ -77,9 +82,11 @@ type TCardActionType = "copy" | "delete";
 type TCardActionProps = {
   actionType: TCardActionType;
   cardText: string;
+  cardIndex?: number;
 };
 
-const CardAction = ({ actionType, cardText }: TCardActionProps) => {
+const CardAction = ({ actionType, cardText, cardIndex }: TCardActionProps) => {
+  const { doRemoveApplication } = useContext(AppContext);
   let iconUrl, name, handleClick;
   switch (actionType) {
     case "copy":
@@ -90,7 +97,8 @@ const CardAction = ({ actionType, cardText }: TCardActionProps) => {
     case "delete":
       iconUrl = "./icons/delete.svg";
       name = CONST_TEXT_CARD_ACTION_DELETE;
-      handleClick = () => console.log("delete");
+      handleClick = () =>
+        cardIndex !== undefined && doRemoveApplication(cardIndex);
       break;
     default:
       return null;

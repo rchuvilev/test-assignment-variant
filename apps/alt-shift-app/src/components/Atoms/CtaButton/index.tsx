@@ -13,6 +13,7 @@ type TProps = {
   handleClick?: Function;
   icon?: string;
   children?: React.ReactElement | string;
+  color?: string;
 } & Partial<React.ComponentProps<any>>;
 
 const Component = (props: TProps) => {
@@ -40,7 +41,7 @@ const Component = (props: TProps) => {
     >
       <TypographyText
         size={isSmall ? 16 : 18}
-        color={"var(--color-white)"}
+        color={props?.color ?? "var(--color-white)"}
         className={styles.CtaButton}
         {...props}
       >

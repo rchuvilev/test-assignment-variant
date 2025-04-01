@@ -60,3 +60,10 @@
     margin: 0;
     text-align: center;
 }
+
+.FullIcon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    margin-left: 16px;
+}

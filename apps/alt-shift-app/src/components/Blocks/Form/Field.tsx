@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import {
   CONST_TEXT_FORM_TEXT_INPUT_MAX_CHARS,
   CONST_TEXT_FORM_TEXTAREA_MAX_CHARS,
@@ -11,6 +11,7 @@ import {
   getPlaceholder,
   TData,
 } from "../../../features/ApplicationsData/applicationsData.model.ts";
+import { AppContext } from "../../../App.tsx";
 
 export type TProps = {
   label: string;
@@ -41,6 +42,7 @@ export const Component = ({
   handleBlur,
 }: TProps) => {
   const { Field, Label, Control } = RadixForm;
+  const { doCurrApplicationUpdate } = useContext(AppContext);
   const name = keyName;
   const inputRef = useRef<HTMLElement>(null);
   const counterRef = useRef<HTMLElement>(null);
@@ -78,6 +80,7 @@ export const Component = ({
       const counter = counterRef?.current?.querySelector("span");
       counter && (counter.innerText = textAreaCounterText(valueLength));
       counter?.style.setProperty("--text-color", error ? red : gray);
+      doCurrApplicationUpdate({ [keyName]: e.target.value }, false);
     }, 50);
   };
   const placeholder = getPlaceholder(keyName as keyof TData);

@@ -75,7 +75,7 @@ button:has(.SubmitButton) {
     }
 }
 
-.__submitting + [class*="Card"]:before {
+.__submitting:not(.__retry) + [class*="Card"]:before {
     content: "";
     display: block;
     position: absolute;
@@ -108,7 +108,7 @@ button:has(.__submitting):before {
     animation: anim_spin_loader 2s linear infinite;
 }
 
-button:has(.__retry) {
+button:has(.__retry:not(.__submitting)) {
     background-color: transparent;
     border-color: var(--color-gray-light);
 }

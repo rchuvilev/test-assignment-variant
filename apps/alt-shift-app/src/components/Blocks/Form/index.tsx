@@ -21,7 +21,7 @@ type TProps = {
 
 const Form = ({ formData }: TProps) => {
   const { Submit } = RadixForm;
-  const { doCurrApplicationUpdate } = useContext(AppContext);
+  const { doCurrApplicationUpdate, isApplicationFull } = useContext(AppContext);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBlur: FocusEventHandler<HTMLInputElement> = (e: any) => {
@@ -43,9 +43,9 @@ const Form = ({ formData }: TProps) => {
     aiRequest({
       reqData,
       onSuccess: (resData: string) => {
-        const updatdData = { ...reqData, result: resData };
-        utilDevLogger("@Form.handleSubmit - Success:", updatdData);
-        doCurrApplicationUpdate(updatdData, true);
+        const updatedData = { ...reqData, result: resData };
+        utilDevLogger("@Form.handleSubmit - Success:", updatedData);
+        doCurrApplicationUpdate(updatedData, true);
       },
       onError: (err: any) => {
         utilDevLogger(
@@ -79,7 +79,7 @@ const Form = ({ formData }: TProps) => {
       ));
 
   const SubmitButton = () => {
-    const isFormDone = formData.result && formData.result.length > 1;
+    const isFormDone = isApplicationFull;
     const buttonIcon = isSubmitting
       ? "./icons/loader.svg"
       : isFormDone
@@ -100,6 +100,7 @@ const Form = ({ formData }: TProps) => {
             { [style.__submitting]: isSubmitting },
             { [style.__retry]: isFormDone },
           )}
+          color={isFormDone ? "var(--font-color-black)" : "var(--color-white)"}
           handleClick={CONST_NOOP_FUNCTION}
         >
           {buttonText}

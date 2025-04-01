@@ -1,15 +1,22 @@
 import { Portal } from "@radix-ui/react-portal";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { Button, Icon } from "ui-kit";
 import style from "./index.module.css";
 import clsx from "clsx";
 import { triggerPageViewChange } from "../../../features/PageView/usePageView.tsx";
 import { EPageViews } from "../../../features/PageView/pageView.model.ts";
 import { Counter } from "../../Atoms/Counter";
+import { AppContext } from "../../../App.tsx";
+import { applicationsDataHelper } from "../../../features/ApplicationsData/applicationsData.helper.ts";
 
 type TProps = {};
 
 const HeaderPortal = ({}: TProps) => {
+  const {
+    doCurrApplicationUpdate,
+    currApplicationIndex,
+    doGotoNextApplication,
+  } = useContext(AppContext);
   const getContainer = () =>
     (document.getElementById("header-portal") as HTMLElement) ?? null;
   const ref = useRef<HTMLElement>(getContainer());
@@ -28,6 +35,9 @@ const HeaderPortal = ({}: TProps) => {
   }, []);
 
   const handleClick = () => {
+    const update = applicationsDataHelper?.data?.[currApplicationIndex];
+    update && doCurrApplicationUpdate({ ...update }, false);
+    doGotoNextApplication();
     triggerPageViewChange(EPageViews.HOME);
   };
 
